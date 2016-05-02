@@ -6,7 +6,7 @@ Easy theming and composition for CSS Modules.
 $ npm install --save react-css-themr
 ```
 
-**Note: Feedback and contributions on the docs are highly appreciated. Please open issues for comments of reach me.**
+**Note: Feedback and contributions on the docs are highly appreciated.**
 
 ## Why?
 
@@ -14,21 +14,21 @@ When you use [CSS Modules](https://github.com/css-modules/css-modules) to style 
 
 ## The approach
 
-Taking ideas from [future-react-ui](https://github.com/nikgraf/future-react-ui) and [react-themeable](https://github.com/markdalgleish/react-themeable), a component should be shipped without styles. This means we can consider the styles as an injectable dependency. In CSS Modules you can consider the imported classnames object as a theme for a component. Therefore, every styled component should define a classname API to be used in the rendering function.
+Taking ideas from [future-react-ui](https://github.com/nikgraf/future-react-ui) and [react-themeable](https://github.com/markdalgleish/react-themeable), a component should be shipped **without** styles. This means we can consider the styles as an **injectable dependency**. In CSS Modules you can consider the imported classnames object as a **theme** for a component. Therefore, every styled component should define a *classname API* to be used in the rendering function.
 
-The most immediate way of providing a classname object is via props. In case you want to import a component with a theme already injected, you have to write a higher order component that does the job. This is ok for your own components, but for ui-kits like [React Toolbox](www.react-toolbox.com) or [Belle](http://http://nikgraf.github.io/belle/), you'd have to write a wrapper for every single component you want to use. In this fancy, you can understand the theme as a set of related classname objects for different components. It makes sense to group them together in a single object and move it through the component tree using a context. This way, you can provide a theme either via context, hoc or props.
+The most immediate way of providing a classname object is via *props*. In case you want to import a component with a theme already injected, you have to write a higher order component that does the job. This is ok for your own components, but for ui-kits like [React Toolbox](www.react-toolbox.com) or [Belle](http://http://nikgraf.github.io/belle/), you'd have to write a wrapper for every single component you want to use. In this fancy, you can understand the theme as a **set** of related classname objects for different components. It makes sense to group them together in a single object and move it through the component tree using a context. This way, you can provide a theme either via **context**, **hoc** or **props**.
 
-The approach of react-css-themr consists of a provider and a decorator. The provider sets a context theme. The decorator adds to your components the logic to figure out which theme should be used, depending on configuration, context and props.
+The approach of react-css-themr consists of a *provider* and a *decorator*. The provider sets a context theme. The decorator adds to your components the logic to figure out which theme should be used or how should it be composed, depending on configuration, context and props.
 
 ## Combining CSS modules
 
-There are three possible sources for your component. Sorted by priority: context, configuration and props. Any of them can be missing. In case multiple themes are present,  you may want to compose the final classnames object in three different ways:
+There are three possible sources for your component. Sorted by priority: **context**, **configuration** and **props**. Any of them can be missing. In case multiple themes are present,  you may want to compose the final classnames object in three different ways:
 
--  Override: the theme object with the highest priority is the one used.
-- Softly merging: theme objects are merged but if a key is present in more than one object, the final value corresponds to the theme with highest priority.
-- Deeply merging: theme objects are merged and if a key is present in more than one object, the values for each objects are concatenated.
+-  *Override*: the theme object with the highest priority is the one used.
+- *Softly merging*: theme objects are merged but if a key is present in more than one object, the final value corresponds to the theme with highest priority.
+- *Deeply merging*: theme objects are merged and if a key is present in more than one object, the values for each objects are concatenated.
 
-You can choose whatever you want. We consider the last one as the most flexible so it's selected by default.
+You can choose whatever you want. We consider the last one as the most flexible so it's selected *by default*.
 
 ## How does it work?
 
@@ -71,7 +71,7 @@ export default (props) => (
 
 ### Default theming
 
-If you use a component with a base theme, you may to want import the component with the theme already injected. Then you can compose its style via props with another theme object. In this case the base css will always be bundled:
+If you use a component with a base theme, you may to want import the component with the theme already injected. Then you can compose its style via props with another theme object. In this case the base css will **always** be bundled:
 
 ```jsx
 // SuccessButton.js
@@ -120,7 +120,7 @@ The final classnames object for the `Button` component would include class value
 
 ### Context theming
 
-Although context theming is not limited to ui-kits, it's very useful to avoid declaring hoc for every component. For example, in react-toolbox, you can define a context theme like:
+Although context theming is not limited to ui-kits, it's very useful to avoid declaring hoc for every component. For example, in [react-toolbox](www.react-toolbox.com), you can define a context theme like:
 
 ```jsx
 import React from 'react';

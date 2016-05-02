@@ -1,6 +1,6 @@
-[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-css-themr)
-[![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/javivelasco/react-css-themr)
-[![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-css-themr)
+[![npm version](https://img.shields.io/npm/v/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/react-css-themr)
+[![Build Status](http://img.shields.io/travis/javivelasco/react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/javivelasco/react-css-themr)
+[![NPM Status](http://img.shields.io/npm/dm/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/react-css-themr)
 
 # React CSS Themr
 

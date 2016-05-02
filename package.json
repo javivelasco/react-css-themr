@@ -14,6 +14,10 @@
     "test": "mocha --compilers js:babel-core/register --recursive --reporter spec --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
   },
+  "bugs": {
+    "url": "https://github.com/javivelasco/react-css-themr/issues"
+  }
+  "homepage": "https://github.com/javivelasco/react-css-themr#readme",
   "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
   "license": "MIT",
   "devDependencies": {

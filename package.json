@@ -2,27 +2,27 @@
   "name": "react-css-themr",
   "description": "React CSS Themr",
   "homepage": "https://github.com/javivelasco/react-css-themr#readme",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "./lib",
   "author": {
     "name": "Javi Velasco",
     "email": "javier.velasco86@gmail.com",
     "url": "http://javivelasco.com/"
   },
-  "bugs": {
-    "url": "https://github.com/javivelasco/react-css-themr/issues"
-  },
-  "keywords": [
-    "react",
-    "react-themr",
-    "css-modules",
-    "theming",
-    "customization"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/javivelasco/react-css-themr.git"
   },
+  "bugs": {
+    "url": "https://github.com/javivelasco/react-css-themr/issues"
+  },
+  "keywords": [
+    "css-modules",
+    "customization",
+    "react",
+    "react-themr",
+    "theming"
+  ],
   "devDependencies": {
     "babel-cli": "^6.7.7",
     "babel-core": "^6.7.7",

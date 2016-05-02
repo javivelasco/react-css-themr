@@ -1,18 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 
+const COMPOSE_DEEPLY = 'deeply';
+const COMPOSE_SOFTLY = 'softly';
+const DONT_COMPOSE = false;
+
 const DEFAULT_OPTIONS = {
-  composeTheme: true
+  composeTheme: COMPOSE_DEEPLY
 };
 
 export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (ThemedComponent) => {
   const { composeTheme: optionComposeTheme } = options;
+  validateComposeOption(optionComposeTheme);
   return class Themed extends Component {
     static contextTypes = {
       themr: PropTypes.object
     };
 
     static propTypes = {
-      composeTheme: PropTypes.bool,
+      composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
       theme: PropTypes.object
     };
 
@@ -20,24 +25,34 @@ export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (Themed
       composeTheme: optionComposeTheme
     };
 
+    getThemeNotComposed() {
+      if (this.props.theme) return this.props.theme;
+      if (localTheme) return localTheme;
+      return contextTheme;
+    }
+
+    getContextTheme() {
+      return this.context.themr
+        ? this.context.themr.theme[componentName]
+        : {}
+    }
+
     getTheme() {
-      if (!this.props.composeTheme && this.props.theme) return this.props.theme;
-      if (!this.props.composeTheme && localTheme) return localTheme;
-      const contextTheme = localTheme
-        ? themeable(this.context.themr.theme[componentName], localTheme)
-        : this.context.themr.theme[componentName];
-      return themeable(contextTheme, this.props.theme);
+      return this.props.composeTheme === COMPOSE_SOFTLY
+        ? Object.assign({}, this.getContextTheme(), localTheme, this.props.theme)
+        : themeable(themeable(this.getContextTheme(), localTheme), this.props.theme);
     }
 
     render () {
       return React.createElement(ThemedComponent, {
         ...this.props,
-        theme: this.getTheme()
+        theme: this.props.composeTheme
+          ? this.getTheme()
+          : this.getThemeNotComposed()
       });
     }
   }
 };
-
 
 function themeable(style = {}, theme) {
   if (!theme) return style;
@@ -46,4 +61,14 @@ function themeable(style = {}, theme) {
       ? { ...result, [key]: `${style[key]} ${theme[key]}` }
       : { ...result, [key]: theme[key] || style[key] }
   ), {});
+}
+
+function validateComposeOption(composeTheme) {
+  if ([COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE].indexOf(composeTheme) === -1) {
+    throw new Error(
+      `Invalid composeTheme option for react-css-themr. Valid composition options\
+ are ${COMPOSE_DEEPLY}, ${COMPOSE_SOFTLY} and ${DONT_COMPOSE}. The given\
+ option was ${composeTheme}`
+    );
+  }
 }

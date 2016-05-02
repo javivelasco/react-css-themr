@@ -12,6 +12,17 @@
   "bugs": {
     "url": "https://github.com/javivelasco/react-css-themr/issues"
   },
+  "keywords": [
+    "react",
+    "react-themr",
+    "css-modules",
+    "theming",
+    "customization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javivelasco/react-css-themr.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.7.7",
     "babel-core": "^6.7.7",

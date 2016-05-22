@@ -12,6 +12,8 @@ export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (Themed
   const { composeTheme: optionComposeTheme } = options
   validateComposeOption(optionComposeTheme)
   return class Themed extends Component {
+    static displayName = `Themed ${ThemedComponent.name}`;
+
     static contextTypes = {
       themr: PropTypes.object
     }

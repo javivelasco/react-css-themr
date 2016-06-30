@@ -41,7 +41,7 @@ Say you have a `Button` component you want to make themeable. You should pass a 
 ```jsx
 // Button.js
 import React, { Component } from 'react';
-import { themr } from 'react-themr';
+import { themr } from 'react-css-themr';
 
 @themr('MyThemedButton')
 class Button extends Component {
@@ -80,7 +80,7 @@ If you use a component with a base theme, you may to want import the component w
 ```jsx
 // SuccessButton.js
 import React, { Component } from 'react';
-import { themr } from 'react-themr';
+import { themr } from 'react-css-themr';
 import successTheme from './SuccessButton.css';
 
 @themr('MySuccessButton', successTheme)

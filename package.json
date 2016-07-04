@@ -20,7 +20,7 @@
     "css-modules",
     "customization",
     "react",
-    "react-themr",
+    "react-css-themr",
     "theming"
   ],
   "devDependencies": {

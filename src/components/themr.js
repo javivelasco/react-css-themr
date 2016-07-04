@@ -46,9 +46,9 @@ export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (Themed
     }
 
     render() {
-      const { composeTheme } = this.props
+      const { composeTheme, ...rest } = this.props
       return React.createElement(ThemedComponent, {
-        ...this.props,
+        ...rest,
         theme: composeTheme
           ? this.getTheme()
           : this.getThemeNotComposed()

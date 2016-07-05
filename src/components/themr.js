@@ -60,7 +60,7 @@ export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (Themed
 function themeable(style = {}, theme) {
   if (!theme) return style
   return [ ...Object.keys(theme), ...Object.keys(style) ].reduce((result, key) => (
-    theme[key] && style[key] && theme[key].indexOf(style[key]) === -1
+    typeof theme[key] === 'string' && style[key] && theme[key].indexOf(style[key]) === -1
       ? { ...result, [key]: `${style[key]} ${theme[key]}` }
       : { ...result, [key]: theme[key] || style[key] }
   ), {})

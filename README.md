@@ -28,7 +28,7 @@ The approach of react-css-themr consists of a *provider* and a *decorator*. The 
 
 There are three possible sources for your component. Sorted by priority: **context**, **configuration** and **props**. Any of them can be missing. In case multiple themes are present,  you may want to compose the final classnames object in three different ways:
 
--  *Override*: the theme object with the highest priority is the one used.
+- *Override*: the theme object with the highest priority is the one used.
 - *Softly merging*: theme objects are merged but if a key is present in more than one object, the final value corresponds to the theme with highest priority.
 - *Deeply merging*: theme objects are merged and if a key is present in more than one object, the values for each objects are concatenated.
 
@@ -75,7 +75,7 @@ export default (props) => (
 
 ### Default theming
 
-If you use a component with a base theme, you may to want import the component with the theme already injected. Then you can compose its style via props with another theme object. In this case the base css will **always** be bundled:
+If you use a component with a base theme, you may want to import the component with the theme already injected. Then you can compose its style via props with another theme object. In this case the base css will **always** be bundled:
 
 ```jsx
 // SuccessButton.js
@@ -99,7 +99,7 @@ class Button extends Component {
 export default Button;
 ```
 
-Imagine you want to make the success button uppercase for an specific case . You can include the classname mixed with other classnames:
+Imagine you want to make the success button uppercase for a specific case. You can include the classname mixed with other classnames:
 
 ```jsx
 import React from 'react';
@@ -124,7 +124,7 @@ The final classnames object for the `Button` component would include class value
 
 ### Context theming
 
-Although context theming is not limited to ui-kits, it's very useful to avoid declaring hoc for every component. For example, in [react-toolbox](www.react-toolbox.com), you can define a context theme like:
+Although context theming is not limited to ui-kits, it's very useful to avoid declaring hoc for every component. For example, in [react-toolbox](http://www.react-toolbox.com), you can define a context theme like:
 
 ```jsx
 import React from 'react';
@@ -169,9 +169,9 @@ The returned component accepts a `theme` and `composeTheme`  apart from the prop
 
 ## About
 
-The project is originally authored by [Javi Velasco](www.javivelasco.com) as an effort of providing a better customization experience for [React Toolbox](www.react-toolbox.com). Any comments, improvements or feedback is highly appreciated.
+The project is originally authored by [Javi Velasco](http://www.javivelasco.com) as an effort of providing a better customization experience for [React Toolbox](http://www.react-toolbox.com). Any comments, improvements or feedback is highly appreciated.
 
-Thanks to [Nik Graf](www.twitter.com/nikgraf) and [Mark Dalgleish](www.twitter.com/markdalgleish) for their thoughts about theming and customization for React components.
+Thanks to [Nik Graf](http://www.twitter.com/nikgraf) and [Mark Dalgleish](http://www.twitter.com/markdalgleish) for their thoughts about theming and customization for React components.
 
 ## License
 

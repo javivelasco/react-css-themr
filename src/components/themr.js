@@ -1,15 +1,17 @@
 import React, { Component, PropTypes } from 'react'
+import invariant from 'invariant'
 
 const COMPOSE_DEEPLY = 'deeply'
 const COMPOSE_SOFTLY = 'softly'
 const DONT_COMPOSE = false
 
 const DEFAULT_OPTIONS = {
-  composeTheme: COMPOSE_DEEPLY
+  composeTheme: COMPOSE_DEEPLY,
+  withRef: false
 }
 
-export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (ThemedComponent) => {
-  const { composeTheme: optionComposeTheme } = options
+export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
+  const { composeTheme: optionComposeTheme, withRef: optionWithRef } = { ...DEFAULT_OPTIONS, ...options }
   validateComposeOption(optionComposeTheme)
   return class Themed extends Component {
     static displayName = `Themed ${ThemedComponent.name}`;
@@ -25,6 +27,15 @@ export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (Themed
 
     static defaultProps = {
       composeTheme: optionComposeTheme
+    }
+
+    getWrappedInstance() {
+      invariant(optionWithRef,
+        'To access the wrapped instance, you need to specify ' +
+        '{ withRef: true } as the third argument of the themr() call.'
+      )
+
+      return this.refs.wrappedInstance
     }
 
     getThemeNotComposed() {
@@ -47,12 +58,26 @@ export default (componentName, localTheme, options = DEFAULT_OPTIONS) => (Themed
 
     render() {
       const { composeTheme, ...rest } = this.props
-      return React.createElement(ThemedComponent, {
-        ...rest,
-        theme: composeTheme
-          ? this.getTheme()
-          : this.getThemeNotComposed()
-      })
+      let renderedElement
+
+      if (optionWithRef) {
+        renderedElement = React.createElement(ThemedComponent, {
+          ...rest,
+          ref: 'wrappedInstance',
+          theme: composeTheme
+            ? this.getTheme()
+            : this.getThemeNotComposed()
+        })
+      } else {
+        renderedElement = React.createElement(ThemedComponent, {
+          ...rest,
+          theme: composeTheme
+            ? this.getTheme()
+            : this.getThemeNotComposed()
+        })
+      }
+
+      return renderedElement
     }
   }
 }

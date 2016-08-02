@@ -162,10 +162,9 @@ The returned component accepts a `theme` and `composeTheme`  apart from the prop
 
 - `Identifier` *(String)* used to provide a unique identifier to the component that will be used to get a theme from context.
 - `[defaultTheme]` (*Object*) is  classname object resolved from CSS modules. It will be used as the default theme to calculate a new theme that will be passed to the component.
-- `[options]` (*Object*) is an option object that for now only accepts one value: `composeTheme` which accepts:
-  - `deeply` to deeply merge themes.
-  - `softly` to softly merge themes.
-  - `false` to disable theme merging.
+- `[options]` (*Object*) If specified it allows to customize the behavior: 
+  - [`composeTheme = 'deeply'`] *(String)* allows to customize the way themes are merged or to disable merging completely. The accepted values are `deeply` to deeply merge themes, `softly` to softly merge themes and `false` to disable theme merging.
+  - [`withRef = false`] *(Boolean)* if true, stores a ref to the wrapped component instance and makes it available via `getWrappedInstance()` method. Defaults to false.
 
 ## About
 

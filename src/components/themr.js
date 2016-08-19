@@ -84,11 +84,12 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 function themeable(style = {}, theme) {
   if (!theme) return style
-  return [ ...Object.keys(theme), ...Object.keys(style) ].reduce((result, key) => (
-    typeof theme[key] === 'string' && style[key] && theme[key].indexOf(style[key]) === -1
-      ? { ...result, [key]: `${style[key]} ${theme[key]}` }
-      : { ...result, [key]: theme[key] || style[key] }
-  ), {})
+  return Object.keys(theme).reduce((result, key) => (
+    Object.assign(result,
+      style[key] && theme[key].indexOf(style[key]) === -1
+        ? { [key]: `${style[key]} ${theme[key]}` }
+        : { [key]: theme[key] || style[key] }
+    )), style)
 }
 
 function validateComposeOption(composeTheme) {

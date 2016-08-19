@@ -89,7 +89,7 @@ function themeable(style = {}, theme) {
        style[key] && theme[key].indexOf(style[key]) === -1
        ? `${style[key]} ${theme[key]}`
        : theme[key] || style[key]
-    })), style)
+    })), Object.assign({}, style))
 }
 
 function validateComposeOption(composeTheme) {

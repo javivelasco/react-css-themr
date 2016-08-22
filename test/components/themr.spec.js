@@ -325,7 +325,7 @@ describe('Themr decorator function', () => {
     expect(decorated.refs.wrappedInstance.someInstanceMethod()).toBe(someData)
   })
 
-  it('should throw if namespace passed without theme', () => {
+  it('should throw if themeNamespace passed without theme', () => {
     const theme = { Container: { foo: 'foo_1234' } }
 
     @themr('Container')
@@ -337,12 +337,12 @@ describe('Themr decorator function', () => {
 
     expect(() => TestUtils.renderIntoDocument(
       <ProviderMock theme={theme}>
-        <Container namespace="container"/>
+        <Container themeNamespace="container"/>
       </ProviderMock>
-    )).toThrow(/Invalid namespace use in react-css-themr. Namespace prop should be used only with theme prop./)
+    )).toThrow(/Invalid themeNamespace use in react-css-themr. themeNamespace prop should be used only with theme prop./)
   })
 
-  it('when providing a namespace prop composes a theme', () => {
+  it('when providing a themeNamespace prop composes a theme', () => {
     const containerTheme = { foo: 'foo_123' }
     const containerThemeLocal = { foo: 'foo_567' }
     const containerThemeProps = { foo: 'foo_89', containerFoo: 'foo_000' }
@@ -357,7 +357,7 @@ describe('Themr decorator function', () => {
 
     const tree = TestUtils.renderIntoDocument(
       <ProviderMock theme={theme}>
-        <Container theme={containerThemeProps} namespace="container" />
+        <Container theme={containerThemeProps} themeNamespace="container" />
       </ProviderMock>
     )
 

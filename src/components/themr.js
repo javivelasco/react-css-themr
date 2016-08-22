@@ -23,7 +23,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     static propTypes = {
       composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
       theme: PropTypes.object,
-      namespace: PropTypes.string
+      themeNamespace: PropTypes.string
     }
 
     static defaultProps = {
@@ -40,14 +40,14 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     getNamespacedTheme() {
-      const { namespace, theme } = this.props
-      if (!namespace) return theme
-      if (namespace &&  !theme) throw new Error('Invalid namespace use in react-css-themr. ' +
-        'Namespace prop should be used only with theme prop.')
+      const { themeNamespace, theme } = this.props
+      if (!themeNamespace) return theme
+      if (themeNamespace &&  !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
+        'themeNamespace prop should be used only with theme prop.')
 
       return Object.keys(theme)
-        .filter(key => key.startsWith(namespace))
-        .reduce((p, c) => ({ ...p, [removeNamespace(c, namespace)]:  theme[c] }), {})
+        .filter(key => key.startsWith(themeNamespace))
+        .reduce((p, c) => ({ ...p, [removeNamespace(c, themeNamespace)]:  theme[c] }), {})
     }
 
     getThemeNotComposed() {
@@ -114,7 +114,7 @@ function validateComposeOption(composeTheme) {
   }
 }
 
-function removeNamespace(key, namespace) {
-  const capitilized = key.substr(namespace.length)
+function removeNamespace(key, themeNamespace) {
+  const capitilized = key.substr(themeNamespace.length)
   return capitilized.slice(0, 1).toLowerCase() + capitilized.slice(1)
 }

@@ -47,7 +47,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
       return Object.keys(theme)
         .filter(key => key.startsWith(themeNamespace))
-        .reduce((p, c) => ({ ...p, [removeNamespace(c, themeNamespace)]:  theme[c] }), {})
+        .reduce((result, key) => ({ ...result, [removeNamespace(key, themeNamespace)]:  theme[key] }), {})
     }
 
     getThemeNotComposed() {

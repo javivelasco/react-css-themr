@@ -324,4 +324,45 @@ describe('Themr decorator function', () => {
     expect(decorated.getWrappedInstance().someInstanceMethod()).toBe(someData)
     expect(decorated.refs.wrappedInstance.someInstanceMethod()).toBe(someData)
   })
+
+  it('should throw if themeNamespace passed without theme', () => {
+    const theme = { Container: { foo: 'foo_1234' } }
+
+    @themr('Container')
+    class Container extends Component {
+      render() {
+        return <Passthrough {...this.props} />
+      }
+    }
+
+    expect(() => TestUtils.renderIntoDocument(
+      <ProviderMock theme={theme}>
+        <Container themeNamespace="container"/>
+      </ProviderMock>
+    )).toThrow(/Invalid themeNamespace use in react-css-themr. themeNamespace prop should be used only with theme prop./)
+  })
+
+  it('when providing a themeNamespace prop composes a theme', () => {
+    const containerTheme = { foo: 'foo_123' }
+    const containerThemeLocal = { foo: 'foo_567' }
+    const containerThemeProps = { foo: 'foo_89', containerFoo: 'foo_000' }
+    const theme = { Container: containerTheme }
+
+    @themr('Container', containerThemeLocal)
+    class Container extends Component {
+      render() {
+        return <Passthrough {...this.props} />
+      }
+    }
+
+    const tree = TestUtils.renderIntoDocument(
+      <ProviderMock theme={theme}>
+        <Container theme={containerThemeProps} themeNamespace="container" />
+      </ProviderMock>
+    )
+
+    const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
+    const expectedTheme = { foo: 'foo_123 foo_567 foo_000' }
+    expect(stub.props.theme).toEqual(expectedTheme)
+  })
 })

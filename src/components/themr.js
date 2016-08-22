@@ -22,7 +22,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     static propTypes = {
       composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
-      theme: PropTypes.object
+      theme: PropTypes.object,
+      themeNamespace: PropTypes.string
     }
 
     static defaultProps = {
@@ -38,8 +39,19 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       return this.refs.wrappedInstance
     }
 
+    getNamespacedTheme() {
+      const { themeNamespace, theme } = this.props
+      if (!themeNamespace) return theme
+      if (themeNamespace &&  !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
+        'themeNamespace prop should be used only with theme prop.')
+
+      return Object.keys(theme)
+        .filter(key => key.startsWith(themeNamespace))
+        .reduce((result, key) => ({ ...result, [removeNamespace(key, themeNamespace)]:  theme[key] }), {})
+    }
+
     getThemeNotComposed() {
-      if (this.props.theme) return this.props.theme
+      if (this.props.theme) return this.getNamespacedTheme()
       if (localTheme) return localTheme
       return this.getContextTheme()
     }
@@ -52,8 +64,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     getTheme() {
       return this.props.composeTheme === COMPOSE_SOFTLY
-        ? Object.assign({}, this.getContextTheme(), localTheme, this.props.theme)
-        : themeable(themeable(this.getContextTheme(), localTheme), this.props.theme)
+        ? Object.assign({}, this.getContextTheme(), localTheme, this.getNamespacedTheme())
+        : themeable(themeable(this.getContextTheme(), localTheme), this.getNamespacedTheme())
     }
 
     render() {
@@ -100,4 +112,9 @@ function validateComposeOption(composeTheme) {
  option was ${composeTheme}`
     )
   }
+}
+
+function removeNamespace(key, themeNamespace) {
+  const capitilized = key.substr(themeNamespace.length)
+  return capitilized.slice(0, 1).toLowerCase() + capitilized.slice(1)
 }

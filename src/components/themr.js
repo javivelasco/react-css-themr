@@ -64,7 +64,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     getTheme() {
       return this.props.composeTheme === COMPOSE_SOFTLY
-        ? Object.assign({}, this.getContextTheme(), localTheme, this.getNamespacedTheme())
+        ? { ...this.getContextTheme(), ...localTheme, ...this.getNamespacedTheme() }
         : themeable(themeable(this.getContextTheme(), localTheme), this.getNamespacedTheme())
     }
 
@@ -96,9 +96,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 export function themeable(style = {}, theme) {
   if (!theme) return style
-  return Object.keys(theme).reduce((result, key) => (
-    Object.assign(result, { [key]: `${style[key]} ${theme[key]}` })
-  ), Object.assign({}, style))
+  return Object.keys(theme).reduce((result, key) =>
+    ({ ...result, [key]: `${style[key]} ${theme[key]}` }), style)
 }
 
 function validateComposeOption(composeTheme) {

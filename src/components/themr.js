@@ -66,7 +66,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     getTheme() {
       return this.props.composeTheme === COMPOSE_SOFTLY
-        ? Object.assign({}, this.getContextTheme(), localTheme, this.getNamespacedTheme())
+        ? { ...this.getContextTheme(), ...localTheme, ...this.getNamespacedTheme() }
         : themeable(themeable(this.getContextTheme(), localTheme), this.getNamespacedTheme())
     }
 
@@ -98,9 +98,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 export function themeable(style = {}, theme) {
   if (!theme) return style
-  return Object.keys(theme).reduce((result, key) => (
-    Object.assign(result, { [key]: `${style[key]} ${theme[key]}` })
-  ), Object.assign({}, style))
+  return Object.keys(theme).reduce((result, key) =>
+    ({ ...result, [key]: `${style[key]} ${theme[key]}` }), style)
 }
 
 function validateComposeOption(composeTheme) {
@@ -114,6 +113,6 @@ function validateComposeOption(composeTheme) {
 }
 
 function removeNamespace(key, themeNamespace) {
-  const capitilized = key.substr(themeNamespace.length)
-  return capitilized.slice(0, 1).toLowerCase() + capitilized.slice(1)
+  const capitalized = key.substr(themeNamespace.length)
+  return capitalized.slice(0, 1).toLowerCase() + capitalized.slice(1)
 }

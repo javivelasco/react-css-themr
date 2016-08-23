@@ -250,7 +250,7 @@ describe('Themr decorator function', () => {
   it('throws an error if an invalid composition option passed', () => {
     expect(() => {
       @themr('Container', null, { composeTheme: 'foo' })
-      class Container extends Component {
+      class Container extends Component { //eslint-disable-line no-unused-vars
         render() {
           return <Passthrough {...this.props} />
         }
@@ -369,16 +369,16 @@ describe('Themr decorator function', () => {
   it('should copy statics from ThemedComponent', () => {
     const propTypes = {
       foo: PropTypes.array
-    };
+    }
     const defaultProps = {
       foo: []
-    };
+    }
     @themr('Foo')
     class Foo extends Component {
       static propTypes = propTypes;
       static defaultProps = defaultProps;
     }
-    expect(Foo.propTypes.foo).toBe(propTypes.foo);
-    expect(Foo.defaultProps.foo).toBe(defaultProps.foo);
+    expect(Foo.propTypes.foo).toBe(propTypes.foo)
+    expect(Foo.defaultProps.foo).toBe(defaultProps.foo)
   })
 })

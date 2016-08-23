@@ -248,14 +248,14 @@ describe('Themr decorator function', () => {
   })
 
   it('throws an error if an invalid composition option passed', () => {
-    expect(() => (
+    expect(() => {
       @themr('Container', null, { composeTheme: 'foo' })
-      class Container extends Component {
+      class Container extends Component { //eslint-disable-line no-unused-vars
         render() {
           return <Passthrough {...this.props} />
         }
       }
-    )).toThrow(/composeTheme/)
+    }).toThrow(/composeTheme/)
   })
 
   it('works properly when no theme is provided', () => {
@@ -364,5 +364,21 @@ describe('Themr decorator function', () => {
     const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
     const expectedTheme = { foo: 'foo_123 foo_567 foo_000' }
     expect(stub.props.theme).toEqual(expectedTheme)
+  })
+
+  it('should copy statics from ThemedComponent', () => {
+    const propTypes = {
+      foo: PropTypes.array
+    }
+    const defaultProps = {
+      foo: []
+    }
+    @themr('Foo')
+    class Foo extends Component {
+      static propTypes = propTypes;
+      static defaultProps = defaultProps;
+    }
+    expect(Foo.propTypes.foo).toBe(propTypes.foo)
+    expect(Foo.defaultProps.foo).toBe(defaultProps.foo)
   })
 })

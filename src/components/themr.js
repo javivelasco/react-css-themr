@@ -21,12 +21,14 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     static propTypes = {
+      ...ThemedComponent.propTypes,
       composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
       theme: PropTypes.object,
       themeNamespace: PropTypes.string
     }
 
     static defaultProps = {
+      ...ThemedComponent.defaultProps,
       composeTheme: optionComposeTheme
     }
 

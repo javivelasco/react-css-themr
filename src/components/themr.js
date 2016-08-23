@@ -111,6 +111,6 @@ function validateComposeOption(composeTheme) {
 }
 
 function removeNamespace(key, themeNamespace) {
-  const capitilized = key.substr(themeNamespace.length)
-  return capitilized.slice(0, 1).toLowerCase() + capitilized.slice(1)
+  const capitalized = key.substr(themeNamespace.length)
+  return capitalized.slice(0, 1).toLowerCase() + capitalized.slice(1)
 }

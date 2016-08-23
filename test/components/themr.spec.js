@@ -248,14 +248,14 @@ describe('Themr decorator function', () => {
   })
 
   it('throws an error if an invalid composition option passed', () => {
-    expect(() => (
+    expect(() => {
       @themr('Container', null, { composeTheme: 'foo' })
       class Container extends Component {
         render() {
           return <Passthrough {...this.props} />
         }
       }
-    )).toThrow(/composeTheme/)
+    }).toThrow(/composeTheme/)
   })
 
   it('works properly when no theme is provided', () => {

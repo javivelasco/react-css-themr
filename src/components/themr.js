@@ -98,8 +98,9 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 export function themeable(style = {}, theme) {
   if (!theme) return style
-  return Object.keys(theme).reduce((result, key) =>
-    ({ ...result, [key]: `${style[key]} ${theme[key]}` }), style)
+  return Object.keys(theme).reduce((result, key) => ({
+    ...result, [key]: style[key] ? `${style[key]} ${theme[key]}` : theme[key]
+  }), style)
 }
 
 function validateComposeOption(composeTheme) {

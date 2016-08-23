@@ -365,4 +365,20 @@ describe('Themr decorator function', () => {
     const expectedTheme = { foo: 'foo_123 foo_567 foo_000' }
     expect(stub.props.theme).toEqual(expectedTheme)
   })
+
+  it('should copy statics from ThemedComponent', () => {
+    const propTypes = {
+      foo: PropTypes.array
+    };
+    const defaultProps = {
+      foo: []
+    };
+    @themr('Foo')
+    class Foo extends Component {
+      static propTypes = propTypes;
+      static defaultProps = defaultProps;
+    }
+    expect(Foo.propTypes.foo).toBe(propTypes.foo);
+    expect(Foo.defaultProps.foo).toBe(defaultProps.foo);
+  })
 })

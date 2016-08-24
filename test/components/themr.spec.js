@@ -381,4 +381,18 @@ describe('Themr decorator function', () => {
     expect(Foo.propTypes.foo).toBe(propTypes.foo)
     expect(Foo.defaultProps.foo).toBe(defaultProps.foo)
   })
+
+  it('should not wrap multiple time if used with already wrapped component with the same key', () => {
+    const foo = {
+      foo: 'foo'
+    }
+    const bar = {
+      bar: 'bar'
+    }
+    const key = 'Foo'
+    @themr(key, foo)
+    class Foo {}
+    const Bar = themr(key, bar)(Foo)
+    expect(Bar).toBe(Foo)
+  })
 })

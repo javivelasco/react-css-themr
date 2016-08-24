@@ -381,4 +381,31 @@ describe('Themr decorator function', () => {
     expect(Foo.propTypes.foo).toBe(propTypes.foo)
     expect(Foo.defaultProps.foo).toBe(defaultProps.foo)
   })
+
+  it('should not wrap multiple time if used with already wrapped component with the same key', () => {
+    const foo = {
+      foo: 'foo'
+    }
+    const bar = {
+      bar: 'bar'
+    }
+    const key = 'Foo'
+
+    @themr(key, foo)
+    class Foo extends Component {
+      render() {
+        return <Passthrough {...this.props} />
+      }
+    }
+    const Bar = themr(key, bar)(Foo)
+    expect(Bar).toBe(Foo)
+
+    const tree = TestUtils.renderIntoDocument(<Bar/>)
+
+    const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
+    expect(stub.props.theme).toEqual({
+      ...foo,
+      ...bar
+    })
+  })
 })

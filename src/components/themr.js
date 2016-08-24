@@ -10,10 +10,26 @@ const DEFAULT_OPTIONS = {
   withRef: false
 }
 
+const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
+  Symbol('THEMR_CONFIG') :
+  '__REACT_CSS_THEMR_CONFIG__'
+
 export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
   const { composeTheme: optionComposeTheme, withRef: optionWithRef } = { ...DEFAULT_OPTIONS, ...options }
   validateComposeOption(optionComposeTheme)
-  return class Themed extends Component {
+
+  let config = ThemedComponent[THEMR_CONFIG]
+  if (config && config.componentName === componentName) {
+    config.localTheme = themeable(config.localTheme, localTheme)
+    return ThemedComponent
+  }
+
+  config = {
+    componentName,
+    localTheme
+  }
+
+  class Themed extends Component {
     static displayName = `Themed ${ThemedComponent.name}`;
 
     static contextTypes = {
@@ -54,20 +70,20 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     getThemeNotComposed() {
       if (this.props.theme) return this.getNamespacedTheme()
-      if (localTheme) return localTheme
+      if (config.localTheme) return config.localTheme
       return this.getContextTheme()
     }
 
     getContextTheme() {
       return this.context.themr
-        ? this.context.themr.theme[componentName]
+        ? this.context.themr.theme[config.componentName]
         : {}
     }
 
     getTheme() {
       return this.props.composeTheme === COMPOSE_SOFTLY
-        ? { ...this.getContextTheme(), ...localTheme, ...this.getNamespacedTheme() }
-        : themeable(themeable(this.getContextTheme(), localTheme), this.getNamespacedTheme())
+        ? { ...this.getContextTheme(), ...config.localTheme, ...this.getNamespacedTheme() }
+        : themeable(themeable(this.getContextTheme(), config.localTheme), this.getNamespacedTheme())
     }
 
     render() {
@@ -94,6 +110,10 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       return renderedElement
     }
   }
+
+  Themed[THEMR_CONFIG] = config
+
+  return Themed
 }
 
 export function themeable(style = {}, theme) {

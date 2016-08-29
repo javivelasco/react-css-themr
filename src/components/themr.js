@@ -30,7 +30,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
   }
 
   class Themed extends Component {
-    static displayName = `Themed ${ThemedComponent.name}`;
+    static displayName = `Themed${ThemedComponent.name}`;
 
     static contextTypes = {
       themr: PropTypes.object

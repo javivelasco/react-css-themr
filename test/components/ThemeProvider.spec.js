@@ -30,13 +30,13 @@ describe('ThemeProvider', () => {
 
       expect(() => TestUtils.renderIntoDocument(
         <ThemeProvider theme={theme}>
+          <div />
+          <div />
         </ThemeProvider>
       )).toThrow(/exactly one child/)
 
       expect(() => TestUtils.renderIntoDocument(
         <ThemeProvider theme={theme}>
-          <div />
-          <div />
         </ThemeProvider>
       )).toThrow(/exactly one child/)
     } finally {

@@ -1,6 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import invariant from 'invariant'
 
+/**
+ * @typedef {Object.<string, TReactCSSThemrTheme>} TReactCSSThemrTheme
+ */
+
+/**
+ * @typedef {{}} TReactCSSThemrOptions
+ * @property {String|Boolean} [composeTheme=COMPOSE_DEEPLY]
+ * @property {Boolean} [withRef=false]
+ */
+
 const COMPOSE_DEEPLY = 'deeply'
 const COMPOSE_SOFTLY = 'softly'
 const DONT_COMPOSE = false
@@ -14,6 +24,13 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
   Symbol('THEMR_CONFIG') :
   '__REACT_CSS_THEMR_CONFIG__'
 
+/**
+ * Themr decorator
+ * @param {String|Number|Symbol} componentName - Component name
+ * @param {TReactCSSThemrTheme} localTheme - Base theme
+ * @param {{}} options - Themr options
+ * @returns {function(ThemedComponent:Function):Function} - ThemedComponent
+ */
 export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
   const { composeTheme: optionComposeTheme, withRef: optionWithRef } = { ...DEFAULT_OPTIONS, ...options }
   validateComposeOption(optionComposeTheme)
@@ -116,13 +133,52 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
   return Themed
 }
 
-export function themeable(style = {}, theme) {
-  if (!theme) return style
-  return Object.keys(theme).reduce((result, key) => ({
-    ...result, [key]: style[key] ? `${style[key]} ${theme[key]}` : theme[key]
-  }), style)
+/**
+ * Merges two themes by concatenating values with the same keys
+ * @param {TReactCSSThemrTheme} original - Original theme object
+ * @param {TReactCSSThemrTheme} mixin - Mixing theme object
+ * @returns {TReactCSSThemrTheme} - Merged resulting theme
+ */
+export function themeable(original = {}, mixin) {
+  //don't merge if no mixin is passed
+  if (!mixin) return original
+
+  //merge themes by concatenating values with the same keys
+  return Object.keys(mixin).reduce(
+
+    //merging reducer
+    (result, key) => {
+      const originalValue = original[key]
+      const mixinValue = mixin[key]
+
+      let newValue
+
+      //check if values are nested objects
+      if (typeof originalValue === 'object' && typeof mixinValue === 'object') {
+        //go recursive
+        newValue = themeable(originalValue, mixinValue)
+      } else {
+        //either concat or take mixin value
+        newValue = originalValue ? `${originalValue} ${mixinValue}` : mixinValue
+      }
+
+      return {
+        ...result,
+        [key]: newValue
+      }
+    },
+
+    //use original theme as an acc
+    original
+  )
 }
 
+/**
+ * Validates compose option
+ * @param {String|Boolean} composeTheme - Compose them option
+ * @throws
+ * @returns {undefined}
+ */
 function validateComposeOption(composeTheme) {
   if ([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ].indexOf(composeTheme) === -1) {
     throw new Error(
@@ -133,6 +189,12 @@ function validateComposeOption(composeTheme) {
   }
 }
 
+/**
+ * Removes namespace from key
+ * @param {String} key - Key
+ * @param {String} themeNamespace - Theme namespace
+ * @returns {String} - Key
+ */
 function removeNamespace(key, themeNamespace) {
   const capitalized = key.substr(themeNamespace.length)
   return capitalized.slice(0, 1).toLowerCase() + capitalized.slice(1)

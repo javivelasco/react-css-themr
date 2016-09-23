@@ -1,7 +1,7 @@
 import expect from 'expect'
 import React, { Children, PropTypes, Component } from 'react'
 import TestUtils from 'react-addons-test-utils'
-import { themr } from '../../src/index'
+import { themr, themeable } from '../../src/index'
 
 describe('Themr decorator function', () => {
   class Passthrough extends Component {
@@ -407,5 +407,37 @@ describe('Themr decorator function', () => {
       ...foo,
       ...bar
     })
+  })
+})
+
+describe('themeable function', () => {
+  it('should support merging nested objects', () => {
+    const themeA = {
+      test: 'test',
+      nested: {
+        foo: 'foo',
+        bar: 'bar'
+      }
+    }
+
+    const themeB = {
+      test: 'test2',
+      nested: {
+        foo: 'foo2',
+        test: 'test'
+      }
+    }
+
+    const expected = {
+      test: 'test test2',
+      nested: {
+        foo: 'foo foo2',
+        bar: 'bar',
+        test: 'test'
+      }
+    }
+
+    const result = themeable(themeA, themeB)
+    expect(result).toEqual(expected)
   })
 })

@@ -31,14 +31,14 @@ describe('ThemeProvider', () => {
       expect(() => TestUtils.renderIntoDocument(
         <ThemeProvider theme={theme}>
         </ThemeProvider>
-      )).toThrow(/exactly one child/)
+      )).toThrow(/expected to receive a single React element child/)
 
       expect(() => TestUtils.renderIntoDocument(
         <ThemeProvider theme={theme}>
           <div />
           <div />
         </ThemeProvider>
-      )).toThrow(/exactly one child/)
+      )).toThrow(/expected to receive a single React element child/)
     } finally {
       ThemeProvider.propTypes = propTypes
     }

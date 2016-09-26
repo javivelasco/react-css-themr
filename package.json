@@ -39,11 +39,14 @@
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-react": "^5.0.1",
     "expect": "^1.18.0",
+    "fbjs": "^0.8.4",
     "jsdom": "^8.4.0",
     "mocha": "^2.4.5",
     "react": "^15.0.1",
     "react-addons-test-utils": "^15.0.1",
-    "rimraf": "^2.5.2"
+    "react-dom": "^15.3.2",
+    "rimraf": "^2.5.2",
+    "sinon": "^1.17.6"
   },
   "files": [
     "lib",

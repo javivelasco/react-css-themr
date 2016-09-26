@@ -1,6 +1,9 @@
 import expect from 'expect'
 import React, { Children, PropTypes, Component } from 'react'
 import TestUtils from 'react-addons-test-utils'
+import sinon from 'sinon'
+import { render } from 'react-dom'
+import shallowEqual from 'fbjs/lib/shallowEqual'
 import { themr } from '../../src/index'
 
 describe('Themr decorator function', () => {
@@ -407,5 +410,34 @@ describe('Themr decorator function', () => {
       ...foo,
       ...bar
     })
+  })
+
+  it('should not update theme prop on rerender if nothing changed', () => {
+    const spy = sinon.stub().returns(<div />)
+    const div = document.createElement('div')
+
+    @themr('Container')
+    class Container extends Component {
+      shouldComponentUpdate(nextProps) {
+        return !shallowEqual(nextProps, this.props)
+      }
+
+      render() {
+        return spy()
+      }
+    }
+
+    render(
+      <Container />,
+      div
+    )
+
+    render(
+      <Container />,
+      div
+    )
+
+    expect(spy.calledOnce).toBe(true)
+
   })
 })

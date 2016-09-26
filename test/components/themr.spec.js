@@ -438,6 +438,61 @@ describe('Themr decorator function', () => {
     )
 
     expect(spy.calledOnce).toBe(true)
-
   })
+
+  it(
+    'should update theme prop on rerender if theme or themeNamespace or composeTheme changed',
+    () => {
+      const spy = sinon.stub().returns(<div />)
+      const div = document.createElement('div')
+
+      @themr('Container')
+      class Container extends Component {
+        shouldComponentUpdate(nextProps) {
+          return !shallowEqual(nextProps, this.props)
+        }
+
+        render() {
+          return spy()
+        }
+      }
+      const themeA = {}
+      const themeB = {}
+      const themeNamespace = 'nsA'
+
+      render(
+        <Container theme={themeA} />,
+        div
+      )
+
+      render(
+        <Container theme={themeB} />,
+        div
+      )
+
+      expect(spy.calledTwice).toBe(true)
+
+      render(
+        <Container theme={themeB} themeNamespace={themeNamespace} />,
+        div
+      )
+
+      expect(spy.calledThrice).toBe(true)
+
+
+      render(
+        <Container theme={themeB} themeNamespace={themeNamespace} composeTheme={'deeply'} />,
+        div
+      )
+
+      expect(spy.calledThrice).toBe(true)
+
+      render(
+        <Container theme={themeB} themeNamespace={themeNamespace} composeTheme={'softly'} />,
+        div
+      )
+
+      expect(spy.callCount === 4).toBe(true)
+    }
+  )
 })

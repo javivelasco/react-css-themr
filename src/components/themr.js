@@ -116,18 +116,17 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     render() {
-      const { ...rest } = this.props
       let renderedElement
 
       if (optionWithRef) {
         renderedElement = React.createElement(ThemedComponent, {
-          ...rest,
+          ...this.props,
           ref: 'wrappedInstance',
           theme: this.theme_
         })
       } else {
         renderedElement = React.createElement(ThemedComponent, {
-          ...rest,
+          ...this.props,
           theme: this.theme_
         })
       }

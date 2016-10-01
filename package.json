@@ -2,11 +2,11 @@
   "name": "react-css-themr",
   "description": "React CSS Themr",
   "homepage": "https://github.com/javivelasco/react-css-themr#readme",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "./lib",
   "author": {
-    "name": "Javi Velasco",
     "email": "javier.velasco86@gmail.com",
+    "name": "Javi Velasco",
     "url": "http://javivelasco.com/"
   },
   "repository": {

@@ -48,6 +48,11 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       composeTheme: optionComposeTheme
     }
 
+    constructor(...args) {
+      super(...args)
+      this.theme_ = this.calcTheme(this.props)
+    }
+
     getWrappedInstance() {
       invariant(optionWithRef,
         'To access the wrapped instance, you need to specify ' +
@@ -57,8 +62,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       return this.refs.wrappedInstance
     }
 
-    getNamespacedTheme() {
-      const { themeNamespace, theme } = this.props
+    getNamespacedTheme(props) {
+      const { themeNamespace, theme } = props
       if (!themeNamespace) return theme
       if (themeNamespace &&  !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
         'themeNamespace prop should be used only with theme prop.')
@@ -68,8 +73,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
         .reduce((result, key) => ({ ...result, [removeNamespace(key, themeNamespace)]:  theme[key] }), {})
     }
 
-    getThemeNotComposed() {
-      if (this.props.theme) return this.getNamespacedTheme()
+    getThemeNotComposed(props) {
+      if (props.theme) return this.getNamespacedTheme(props)
       if (config.localTheme) return config.localTheme
       return this.getContextTheme()
     }
@@ -80,30 +85,49 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
         : {}
     }
 
-    getTheme() {
-      return this.props.composeTheme === COMPOSE_SOFTLY
-        ? { ...this.getContextTheme(), ...config.localTheme, ...this.getNamespacedTheme() }
-        : themeable(themeable(this.getContextTheme(), config.localTheme), this.getNamespacedTheme())
+    getTheme(props) {
+      return props.composeTheme === COMPOSE_SOFTLY
+        ? {
+          ...this.getContextTheme(),
+          ...config.localTheme,
+          ...this.getNamespacedTheme(props)
+        }
+        : themeable(
+          themeable(this.getContextTheme(), config.localTheme),
+          this.getNamespacedTheme(props)
+        )
+    }
+
+    calcTheme(props) {
+      const { composeTheme } = props
+      return composeTheme
+        ? this.getTheme(props)
+        : this.getThemeNotComposed(props)
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (
+        nextProps.composeTheme !== this.props.composeTheme ||
+        nextProps.theme !== this.props.theme ||
+        nextProps.themeNamespace !== this.props.themeNamespace
+      ) {
+        this.theme_ = this.calcTheme(nextProps)
+      }
     }
 
     render() {
-      const { composeTheme, ...rest } = this.props
       let renderedElement
 
       if (optionWithRef) {
         renderedElement = React.createElement(ThemedComponent, {
-          ...rest,
+          ...this.props,
           ref: 'wrappedInstance',
-          theme: composeTheme
-            ? this.getTheme()
-            : this.getThemeNotComposed()
+          theme: this.theme_
         })
       } else {
         renderedElement = React.createElement(ThemedComponent, {
-          ...rest,
-          theme: composeTheme
-            ? this.getTheme()
-            : this.getThemeNotComposed()
+          ...this.props,
+          theme: this.theme_
         })
       }
 

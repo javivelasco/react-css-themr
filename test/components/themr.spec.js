@@ -1,6 +1,9 @@
 import expect from 'expect'
 import React, { Children, PropTypes, Component } from 'react'
 import TestUtils from 'react-addons-test-utils'
+import sinon from 'sinon'
+import { render } from 'react-dom'
+import shallowEqual from 'fbjs/lib/shallowEqual'
 import { themr } from '../../src/index'
 
 describe('Themr decorator function', () => {
@@ -408,4 +411,88 @@ describe('Themr decorator function', () => {
       ...bar
     })
   })
+
+  it('should not update theme prop on rerender if nothing changed', () => {
+    const spy = sinon.stub().returns(<div />)
+    const div = document.createElement('div')
+
+    @themr('Container')
+    class Container extends Component {
+      shouldComponentUpdate(nextProps) {
+        return !shallowEqual(nextProps, this.props)
+      }
+
+      render() {
+        return spy()
+      }
+    }
+
+    render(
+      <Container />,
+      div
+    )
+
+    render(
+      <Container />,
+      div
+    )
+
+    expect(spy.calledOnce).toBe(true)
+  })
+
+  it(
+    'should update theme prop on rerender if theme or themeNamespace or composeTheme changed',
+    () => {
+      const spy = sinon.stub().returns(<div />)
+      const div = document.createElement('div')
+
+      @themr('Container')
+      class Container extends Component {
+        shouldComponentUpdate(nextProps) {
+          return !shallowEqual(nextProps, this.props)
+        }
+
+        render() {
+          return spy()
+        }
+      }
+      const themeA = {}
+      const themeB = {}
+      const themeNamespace = 'nsA'
+
+      render(
+        <Container theme={themeA} />,
+        div
+      )
+
+      render(
+        <Container theme={themeB} />,
+        div
+      )
+
+      expect(spy.calledTwice).toBe(true)
+
+      render(
+        <Container theme={themeB} themeNamespace={themeNamespace} />,
+        div
+      )
+
+      expect(spy.calledThrice).toBe(true)
+
+
+      render(
+        <Container theme={themeB} themeNamespace={themeNamespace} composeTheme={'deeply'} />,
+        div
+      )
+
+      expect(spy.calledThrice).toBe(true)
+
+      render(
+        <Container theme={themeB} themeNamespace={themeNamespace} composeTheme={'softly'} />,
+        div
+      )
+
+      expect(spy.callCount === 4).toBe(true)
+    }
+  )
 })

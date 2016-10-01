@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 import sinon from 'sinon'
 import { render } from 'react-dom'
 import shallowEqual from 'fbjs/lib/shallowEqual'
-import { themr } from '../../src/index'
+import { themr, themeable } from '../../src/index'
 
 describe('Themr decorator function', () => {
   class Passthrough extends Component {
@@ -495,4 +495,36 @@ describe('Themr decorator function', () => {
       expect(spy.callCount === 4).toBe(true)
     }
   )
+})
+
+describe('themeable function', () => {
+  it('should support merging nested objects', () => {
+    const themeA = {
+      test: 'test',
+      nested: {
+        foo: 'foo',
+        bar: 'bar'
+      }
+    }
+
+    const themeB = {
+      test: 'test2',
+      nested: {
+        foo: 'foo2',
+        test: 'test'
+      }
+    }
+
+    const expected = {
+      test: 'test test2',
+      nested: {
+        foo: 'foo foo2',
+        bar: 'bar',
+        test: 'test'
+      }
+    }
+
+    const result = themeable(themeA, themeB)
+    expect(result).toEqual(expected)
+  })
 })

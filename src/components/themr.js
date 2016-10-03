@@ -165,8 +165,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 /**
  * Merges two themes by concatenating values with the same keys
- * @param {TReactCSSThemrTheme} original - Original theme object
- * @param {TReactCSSThemrTheme} mixin - Mixing theme object
+ * @param {TReactCSSThemrTheme} [original] - Original theme object
+ * @param {TReactCSSThemrTheme} [mixin] - Mixing theme object
  * @returns {TReactCSSThemrTheme} - Merged resulting theme
  */
 export function themeable(original = {}, mixin) {

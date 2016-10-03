@@ -27,8 +27,8 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
 /**
  * Themr decorator
  * @param {String|Number|Symbol} componentName - Component name
- * @param {TReactCSSThemrTheme} localTheme - Base theme
- * @param {{}} options - Themr options
+ * @param {TReactCSSThemrTheme} [localTheme] - Base theme
+ * @param {{}} [options] - Themr options
  * @returns {function(ThemedComponent:Function):Function} - ThemedComponent
  */
 export default (componentName, localTheme, options = {}) => (ThemedComponent) => {

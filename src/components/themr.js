@@ -46,6 +46,9 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     localTheme
   }
 
+  /**
+   * @property {{wrappedInstance: *}} refs
+   */
   class Themed extends Component {
     static displayName = `Themed${ThemedComponent.name}`;
 
@@ -134,16 +137,19 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     render() {
       let renderedElement
+      //exclude themr-only props
+      //noinspection JSUnusedLocalSymbols
+      const { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
 
       if (optionWithRef) {
         renderedElement = React.createElement(ThemedComponent, {
-          ...this.props,
+          ...props,
           ref: 'wrappedInstance',
           theme: this.theme_
         })
       } else {
         renderedElement = React.createElement(ThemedComponent, {
-          ...this.props,
+          ...props,
           theme: this.theme_
         })
       }

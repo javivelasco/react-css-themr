@@ -27,8 +27,8 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
 /**
  * Themr decorator
  * @param {String|Number|Symbol} componentName - Component name
- * @param {TReactCSSThemrTheme} localTheme - Base theme
- * @param {{}} options - Themr options
+ * @param {TReactCSSThemrTheme} [localTheme] - Base theme
+ * @param {{}} [options] - Themr options
  * @returns {function(ThemedComponent:Function):Function} - ThemedComponent
  */
 export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
@@ -46,6 +46,9 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     localTheme
   }
 
+  /**
+   * @property {{wrappedInstance: *}} refs
+   */
   class Themed extends Component {
     static displayName = `Themed${ThemedComponent.name}`;
 
@@ -134,16 +137,19 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     render() {
       let renderedElement
+      //exclude themr-only props
+      //noinspection JSUnusedLocalSymbols
+      const { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
 
       if (optionWithRef) {
         renderedElement = React.createElement(ThemedComponent, {
-          ...this.props,
+          ...props,
           ref: 'wrappedInstance',
           theme: this.theme_
         })
       } else {
         renderedElement = React.createElement(ThemedComponent, {
-          ...this.props,
+          ...props,
           theme: this.theme_
         })
       }
@@ -159,8 +165,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 /**
  * Merges two themes by concatenating values with the same keys
- * @param {TReactCSSThemrTheme} original - Original theme object
- * @param {TReactCSSThemrTheme} mixin - Mixing theme object
+ * @param {TReactCSSThemrTheme} [original] - Original theme object
+ * @param {TReactCSSThemrTheme} [mixin] - Mixing theme object
  * @returns {TReactCSSThemrTheme} - Merged resulting theme
  */
 export function themeable(original = {}, mixin) {

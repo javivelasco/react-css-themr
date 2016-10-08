@@ -9,7 +9,8 @@ import { themr, themeable } from '../../src/index'
 describe('Themr decorator function', () => {
   class Passthrough extends Component {
     render() {
-      return <div {...this.props} />
+      const { theme, ...props } = this.props //eslint-disable-line no-unused-vars
+      return <div {...props} />
     }
   }
 
@@ -495,6 +496,25 @@ describe('Themr decorator function', () => {
       expect(spy.callCount === 4).toBe(true)
     }
   )
+
+  it('should not pass internal themr props to WrappedComponent', () => {
+    @themr('Container')
+    class Container extends Component {
+      render() {
+        return <Passthrough {...this.props} />
+      }
+    }
+
+    const tree = TestUtils.renderIntoDocument(
+      <Container/>
+    )
+
+    const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
+    // expect(stub.props.theme).toEqual(containerTheme)
+    expect(stub.props.themeNamespace).toNotExist()
+    expect(stub.props.composeTheme).toNotExist()
+    expect(stub.props.theme).toExist()
+  })
 })
 
 describe('themeable function', () => {

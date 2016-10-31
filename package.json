@@ -4,6 +4,7 @@
   "homepage": "https://github.com/javivelasco/react-css-themr#readme",
   "version": "1.4.1",
   "main": "./lib",
+  "typings": "./src/index.d.ts",
   "author": {
     "email": "javier.velasco86@gmail.com",
     "name": "Javi Velasco",

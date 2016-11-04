@@ -2,9 +2,8 @@
   "name": "react-css-themr",
   "description": "React CSS Themr",
   "homepage": "https://github.com/javivelasco/react-css-themr#readme",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "main": "./lib",
-  "typings": "./src/index.d.ts",
   "author": {
     "email": "javier.velasco86@gmail.com",
     "name": "Javi Velasco",
@@ -63,5 +62,6 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0"
-  }
+  },
+  "typings": "./src/index.d.ts"
 }

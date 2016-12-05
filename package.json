@@ -50,7 +50,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "babel src --out-dir lib",

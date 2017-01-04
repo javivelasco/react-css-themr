@@ -547,4 +547,12 @@ describe('themeable function', () => {
     const result = themeable(themeA, themeB)
     expect(result).toEqual(expected)
   })
+
+  it('should skip dupplicated keys classNames', () => {
+    const themeA = { test: 'test' }
+    const themeB = { test: 'test test2' }
+    const expected = { test: 'test test2' }
+    const result = themeable(themeA, themeB)
+    expect(result).toEqual(expected)
+  })
 })

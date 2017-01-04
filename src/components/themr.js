@@ -178,7 +178,7 @@ export function themeable(original = {}, mixin) {
 
     //merging reducer
     (result, key) => {
-      const originalValue = original[key]
+      const originalValue = original[key] || ''
       const mixinValue = mixin[key]
 
       let newValue
@@ -189,7 +189,10 @@ export function themeable(original = {}, mixin) {
         newValue = themeable(originalValue, mixinValue)
       } else {
         //either concat or take mixin value
-        newValue = originalValue ? `${originalValue} ${mixinValue}` : mixinValue
+        newValue = originalValue.split(' ')
+          .concat(mixinValue.split(' '))
+          .filter((item, pos, self) => self.indexOf(item) === pos && item !== '')
+          .join(' ')
       }
 
       return {

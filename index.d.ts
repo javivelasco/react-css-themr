@@ -20,14 +20,19 @@ declare module "react-css-themr"
 
 	}
 
-	interface ThemedComponent<T> extends React.ComponentClass<T>
+	interface ThemedComponent<P, S> extends React.Component<P, S>
 	{
-		getWrappedInstance(): React.Component<T, void>;
+		getWrappedInstance(): React.Component<P, S>;
+	}
+
+	interface ThemedComponentClass<P, S> extends React.ComponentClass<P>
+	{
+		new(props?: P, context?: any): ThemedComponent<P, S>;
 	}
 
 	export function themr(
 		identifier: string,
 		defaultTheme?: {},
 		options?: IThemrOptions
-	): <T extends {}>(component: React.ComponentClass<T>) => ThemedComponent<T>;
+	): <P, S>(component: new() => React.Component<P, S>) => ThemedComponentClass<P, S>;
 }

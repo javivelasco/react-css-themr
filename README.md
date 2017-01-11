@@ -108,7 +108,7 @@ import style from './Section.css';
 
 export default () => (
   <section className={style.section}>
-    <SuccessButton theme={style}>Yai!</SuccessButton>
+    <SuccessButton theme={style.button}>Yai!</SuccessButton>
   </section>
 );
 ```

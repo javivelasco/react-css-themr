@@ -179,7 +179,7 @@ export function themeable(original = {}, mixin) {
     //merging reducer
     (result, key) => {
       const originalValue = original[key] || ''
-      const mixinValue = mixin[key]
+      const mixinValue = mixin[key] || ''
 
       let newValue
 

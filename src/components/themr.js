@@ -183,6 +183,12 @@ export function themeable(original = {}, mixin) {
 
       let newValue
 
+      //when you are mixing an string with a object it should fail
+      invariant(!(typeof originalValue === 'string' && typeof mixinValue === 'object'),
+        `You are merging a string "${originalValue}" with an Object,` +
+        'Make sure you are passing the proper theme descriptors.'
+      )
+
       //check if values are nested objects
       if (typeof originalValue === 'object' && typeof mixinValue === 'object') {
         //go recursive

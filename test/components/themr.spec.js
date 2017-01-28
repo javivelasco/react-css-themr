@@ -555,4 +555,10 @@ describe('themeable function', () => {
     const result = themeable(themeA, themeB)
     expect(result).toEqual(expected)
   })
+
+  it('throws an exception when its called mixing a string with an object', () => {
+    expect(() => {
+      themeable('fail', { test: { foo: 'baz' } })
+    }).toThrow(/sure you are passing the proper theme descriptors/)
+  })
 })

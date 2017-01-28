@@ -178,8 +178,8 @@ export function themeable(original = {}, mixin) {
 
     //merging reducer
     (result, key) => {
-      const originalValue = original[key] || ''
-      const mixinValue = mixin[key] || ''
+      const originalValue = (typeof original === 'object' ? original[key] : original) || ''
+      const mixinValue = (typeof mixin === 'object' ? mixin[key] : mixin) || ''
 
       let newValue
 
@@ -190,7 +190,7 @@ export function themeable(original = {}, mixin) {
       )
 
       //check if values are nested objects
-      if (typeof originalValue === 'object' && typeof mixinValue === 'object') {
+      if (typeof originalValue === 'object' || typeof mixinValue === 'object') {
         //go recursive
         newValue = themeable(originalValue, mixinValue)
       } else {

@@ -139,10 +139,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       let renderedElement
       //exclude themr-only props
       //noinspection JSUnusedLocalSymbols
-      
-      
-      
-      { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
+      const { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
 
       if (optionWithRef) {
         renderedElement = React.createElement(ThemedComponent, {

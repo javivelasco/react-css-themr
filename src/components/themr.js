@@ -139,7 +139,10 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       let renderedElement
       //exclude themr-only props
       //noinspection JSUnusedLocalSymbols
-      const { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
+      
+      
+      
+      { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
 
       if (optionWithRef) {
         renderedElement = React.createElement(ThemedComponent, {
@@ -178,8 +181,13 @@ export function themeable(original = {}, mixin) {
 
     //merging reducer
     (result, key) => {
-      const originalValue = original[key] || ''
-      const mixinValue = mixin[key] || ''
+      
+      const originalValue = typeof original[key] !== 'function'
+        ? (original[key] || '') 
+        : ''; 
+      const mixinValue = typeof mixin[key] !== 'function'
+        ? (mixin[key] || '') 
+        : '';
 
       let newValue
 

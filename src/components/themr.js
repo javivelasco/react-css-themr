@@ -8,7 +8,6 @@ import invariant from 'invariant'
 /**
  * @typedef {{}} TReactCSSThemrOptions
  * @property {String|Boolean} [composeTheme=COMPOSE_DEEPLY]
- * @property {Boolean} [withRef=false]
  */
 
 const COMPOSE_DEEPLY = 'deeply'
@@ -16,8 +15,7 @@ const COMPOSE_SOFTLY = 'softly'
 const DONT_COMPOSE = false
 
 const DEFAULT_OPTIONS = {
-  composeTheme: COMPOSE_DEEPLY,
-  withRef: false
+  composeTheme: COMPOSE_DEEPLY
 }
 
 const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
@@ -32,7 +30,7 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
  * @returns {function(ThemedComponent:Function):Function} - ThemedComponent
  */
 export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
-  const { composeTheme: optionComposeTheme, withRef: optionWithRef } = { ...DEFAULT_OPTIONS, ...options }
+  const { composeTheme: optionComposeTheme } = { ...DEFAULT_OPTIONS, ...options }
   validateComposeOption(optionComposeTheme)
 
   let config = ThemedComponent[THEMR_CONFIG]
@@ -59,6 +57,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     static propTypes = {
       ...ThemedComponent.propTypes,
       composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
+      innerRef: PropTypes.func,
       theme: PropTypes.object,
       themeNamespace: PropTypes.string
     }
@@ -74,9 +73,9 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     getWrappedInstance() {
-      invariant(optionWithRef,
-        'To access the wrapped instance, you need to specify ' +
-        '{ withRef: true } as the third argument of the themr() call.'
+      invariant(true,
+        'DEPRECATED: To access the wrapped instance, you have to pass ' +
+        '{ innerRef: fn } and retrieve with a callback ref style.'
       )
 
       return this.refs.wrappedInstance
@@ -136,25 +135,15 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     render() {
-      let renderedElement
       //exclude themr-only props
       //noinspection JSUnusedLocalSymbols
-      const { composeTheme, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
+      const { composeTheme, innerRef, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
 
-      if (optionWithRef) {
-        renderedElement = React.createElement(ThemedComponent, {
-          ...props,
-          ref: 'wrappedInstance',
-          theme: this.theme_
-        })
-      } else {
-        renderedElement = React.createElement(ThemedComponent, {
-          ...props,
-          theme: this.theme_
-        })
-      }
-
-      return renderedElement
+      return React.createElement(ThemedComponent, {
+        ...props,
+        ref: innerRef,
+        theme: this.theme_
+      })
     }
   }
 

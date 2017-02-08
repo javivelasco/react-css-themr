@@ -167,13 +167,13 @@ export function themeable(original = {}, mixin) {
 
     //merging reducer
     (result, key) => {
-      
+
       const originalValue = typeof original[key] !== 'function'
-        ? (original[key] || '') 
-        : ''; 
+        ? (original[key] || '')
+        : ''
       const mixinValue = typeof mixin[key] !== 'function'
-        ? (mixin[key] || '') 
-        : '';
+        ? (mixin[key] || '')
+        : ''
 
       let newValue
 

@@ -10,7 +10,7 @@ describe('Themr decorator function', () => {
   class Passthrough extends Component {
     render() {
       const { theme, ...props } = this.props //eslint-disable-line no-unused-vars
-      return <div {...props} />
+      return <div ref={(node) => { this.rootNode = node }} {...props} />
     }
   }
 
@@ -278,55 +278,18 @@ describe('Themr decorator function', () => {
     expect(stub.props.theme).toEqual({})
   })
 
-  it('should throw when trying to access the wrapped instance if withRef is not specified', () => {
-    const theme = { Container: { foo: 'foo_1234' } }
-
-    @themr('Container')
+  it('gets the reference to a decorated component using innerRef prop', () => {
     class Container extends Component {
       render() {
         return <Passthrough {...this.props} />
       }
     }
 
-    const tree = TestUtils.renderIntoDocument(
-      <ProviderMock theme={theme}>
-        <Container />
-      </ProviderMock>
-    )
-
-    const container = TestUtils.findRenderedComponentWithType(tree, Container)
-    expect(() => container.getWrappedInstance()).toThrow(
-      /To access the wrapped instance, you need to specify \{ withRef: true \} as the third argument of the themr\(\) call\./
-    )
-  })
-
-  it('should return the instance of the wrapped component for use in calling child methods', () => {
-    const someData = {
-      some: 'data'
-    }
-
-    class Container extends Component {
-      someInstanceMethod() {
-        return someData
-      }
-
-      render() {
-        return <Passthrough />
-      }
-    }
-
-    const decorator = themr('Component', null, { withRef: true })
-    const Decorated = decorator(Container)
-
-    const tree = TestUtils.renderIntoDocument(
-      <Decorated />
-    )
-
-    const decorated = TestUtils.findRenderedComponentWithType(tree, Decorated)
-
-    expect(() => decorated.someInstanceMethod()).toThrow()
-    expect(decorated.getWrappedInstance().someInstanceMethod()).toBe(someData)
-    expect(decorated.refs.wrappedInstance.someInstanceMethod()).toBe(someData)
+    const spy = sinon.stub()
+    const ThemedContainer = themr('Container')(Container)
+    const tree = TestUtils.renderIntoDocument(<ThemedContainer innerRef={spy} />)
+    const stub = TestUtils.findRenderedComponentWithType(tree, Container)
+    expect(spy.withArgs(stub).calledOnce).toBe(true)
   })
 
   it('should throw if themeNamespace passed without theme', () => {
@@ -510,7 +473,6 @@ describe('Themr decorator function', () => {
     )
 
     const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
-    // expect(stub.props.theme).toEqual(containerTheme)
     expect(stub.props.themeNamespace).toNotExist()
     expect(stub.props.composeTheme).toNotExist()
     expect(stub.props.theme).toExist()

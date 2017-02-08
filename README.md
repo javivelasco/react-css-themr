@@ -158,13 +158,12 @@ Makes available a `theme` context to use in styled components. The shape of the 
 
 Returns a `function` to wrap a component and make it themeable.
 
-The returned component accepts a `theme` and `composeTheme`  apart from the props of the original component. They are used to provide a `theme` to the component and to configure the style composition, which can be configured via options too. The function arguments are:
+The returned component accepts a `theme`, `composeTheme` and `innerRef` props apart from the props of the original component. They former two are used to provide a `theme` to the component and to configure the style composition, which can be configured via options too, while the latter is used to pass a ref callback to the decorated component. The function arguments are:
 
 - `Identifier` *(String)* used to provide a unique identifier to the component that will be used to get a theme from context.
 - `[defaultTheme]` (*Object*) is  classname object resolved from CSS modules. It will be used as the default theme to calculate a new theme that will be passed to the component.
 - `[options]` (*Object*) If specified it allows to customize the behavior: 
   - [`composeTheme = 'deeply'`] *(String)* allows to customize the way themes are merged or to disable merging completely. The accepted values are `deeply` to deeply merge themes, `softly` to softly merge themes and `false` to disable theme merging.
-  - [`withRef = false`] *(Boolean)* if true, stores a ref to the wrapped component instance and makes it available via `getWrappedInstance()` method. Defaults to false.
 
 ## About
 

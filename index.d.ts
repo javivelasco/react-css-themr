@@ -6,12 +6,11 @@ declare module "react-css-themr"
 	{
 		/** @default "deeply" */
 		composeTheme?: "deeply" | "softly" | false,
-		/** @default false */
-		withRef?: boolean
 	}
 
 	export interface ThemeProviderProps
 	{
+    innerRef?: Function,
 		theme: {}
 	}
 
@@ -22,7 +21,7 @@ declare module "react-css-themr"
 
 	interface ThemedComponent<P, S> extends React.Component<P, S>
 	{
-		getWrappedInstance(): React.Component<P, S>;
+
 	}
 
 	interface ThemedComponentClass<P, S> extends React.ComponentClass<P>

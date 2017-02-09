@@ -588,4 +588,23 @@ describe('themeable function', () => {
     }
     expect(() => themeable(themeA, themeB)).toThrow()
   })
+
+  it('should support theme spreads', () => {
+    const a = {
+      test: 'a'
+    }
+    const b = {
+      test: 'b'
+    }
+    const c = {
+      test: 'foo',
+      foo: 'foo'
+    }
+    const expected = {
+      test: 'a b foo',
+      foo: 'foo'
+    }
+    const result = themeable(a, b, c)
+    expect(result).toEqual(expected)
+  })
 })

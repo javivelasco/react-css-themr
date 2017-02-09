@@ -152,7 +152,21 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
   return Themed
 }
 
-export function themeable(original = {}, mixin = {}) {
+/**
+ * Merges passed themes by concatenating string keys and processing nested themes
+ * @param {...TReactCSSThemrTheme} themes - Themes
+ * @returns {TReactCSSThemrTheme} - Resulting theme
+ */
+export function themeable(...themes) {
+  return themes.reduce((acc, theme) => merge(acc, theme), {})
+}
+
+/**
+ * @param {TReactCSSThemrTheme} [original] - Original theme
+ * @param {TReactCSSThemrTheme} [mixin] - Mixin theme
+ * @returns {TReactCSSThemrTheme} - resulting theme
+ */
+function merge(original = {}, mixin = {}) {
   //make a copy to avoid mutations of nested objects
   //also strip all functions injected by isomorphic-style-loader
   const result = Object.keys(original).reduce((acc, key) => {
@@ -175,7 +189,7 @@ export function themeable(original = {}, mixin = {}) {
         switch (typeof originalValue) {
           case 'object': {
             //exactly nested theme object - go recursive
-            result[key] = themeable(originalValue, mixinValue)
+            result[key] = merge(originalValue, mixinValue)
             break
           }
 

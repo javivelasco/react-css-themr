@@ -84,7 +84,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     getNamespacedTheme(props) {
       const { themeNamespace, theme } = props
       if (!themeNamespace) return theme
-      if (themeNamespace &&  !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
+      if (themeNamespace && !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
         'themeNamespace prop should be used only with theme prop.')
 
       return Object.keys(theme)
@@ -152,58 +152,85 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
   return Themed
 }
 
-/**
- * Merges two themes by concatenating values with the same keys
- * @param {TReactCSSThemrTheme} [original] - Original theme object
- * @param {TReactCSSThemrTheme} [mixin] - Mixing theme object
- * @returns {TReactCSSThemrTheme} - Merged resulting theme
- */
-export function themeable(original = {}, mixin) {
-  //don't merge if no mixin is passed
-  if (!mixin) return original
+export function themeable(original = {}, mixin = {}) {
+  //make a copy to avoid mutations of nested objects
+  //also strip all functions injected by isomorphic-style-loader
+  const result = Object.keys(original).reduce((acc, key) => {
+    const value = original[key]
+    if (typeof value !== 'function') {
+      acc[key] = value
+    }
+    return acc
+  }, {})
 
-  //merge themes by concatenating values with the same keys
-  return Object.keys(mixin).reduce(
+  //traverse mixin keys and merge them to resulting theme
+  Object.keys(mixin).forEach(key => {
+    //there's no need to set any defaults here
+    const originalValue = result[key]
+    const mixinValue = mixin[key]
 
-    //merging reducer
-    (result, key) => {
+    switch (typeof mixinValue) {
+      case 'object': {
+        //possibly nested theme object
+        switch (typeof originalValue) {
+          case 'object': {
+            //exactly nested theme object - go recursive
+            result[key] = themeable(originalValue, mixinValue)
+            break
+          }
 
-      const originalValue = typeof original[key] !== 'function'
-        ? (original[key] || '')
-        : ''
-      const mixinValue = typeof mixin[key] !== 'function'
-        ? (mixin[key] || '')
-        : ''
+          case 'undefined': {
+            //original does not contain this nested key - just take it as is
+            result[key] = mixinValue
+            break
+          }
 
-      let newValue
-
-      //when you are mixing an string with a object it should fail
-      invariant(!(typeof originalValue === 'string' && typeof mixinValue === 'object'),
-        `You are merging a string "${originalValue}" with an Object,` +
-        'Make sure you are passing the proper theme descriptors.'
-      )
-
-      //check if values are nested objects
-      if (typeof originalValue === 'object' && typeof mixinValue === 'object') {
-        //go recursive
-        newValue = themeable(originalValue, mixinValue)
-      } else {
-        //either concat or take mixin value
-        newValue = originalValue.split(' ')
-          .concat(mixinValue.split(' '))
-          .filter((item, pos, self) => self.indexOf(item) === pos && item !== '')
-          .join(' ')
+          default: {
+            //can't merge an object with a non-object
+            throw new Error(`You are merging object ${key} with a non-object ${originalValue}`)
+          }
+        }
+        break
       }
 
-      return {
-        ...result,
-        [key]: newValue
+      case 'function': {
+        //this handles issue when isomorphic-style-loader addes helper functions to css-module
+        break //just skip
       }
-    },
 
-    //use original theme as an acc
-    original
-  )
+      default: {
+        //plain values
+        switch (typeof originalValue) {
+          case 'object': {
+            //can't merge a non-object with an object
+            throw new Error(`You are merging non-object ${mixinValue} with an object ${key}`)
+          }
+
+          case 'undefined': {
+            //mixin key is new to original theme - take it as is
+            result[key] = mixinValue
+            break
+          }
+          case 'function': {
+            //this handles issue when isomorphic-style-loader addes helper functions to css-module
+            break //just skip
+          }
+
+          default: {
+            //finally we can merge
+            result[key] = originalValue.split(' ')
+              .concat(mixinValue.split(' '))
+              .filter((item, pos, self) => self.indexOf(item) === pos && item !== '')
+              .join(' ')
+            break
+          }
+        }
+        break
+      }
+    }
+  })
+
+  return result
 }
 
 /**

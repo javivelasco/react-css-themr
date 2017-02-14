@@ -27,9 +27,12 @@ declare module "react-css-themr" {
     new(props?: P, context?: any): ThemedComponent<P, S>;
   }
 
-  type TThemrDecorator = <P, S>(component: React.ComponentClass<P> | React.SFC<P>) => ThemedComponentClass<P, S>;
+  interface IThemrDecorator {
+    <P, S>(component: React.ComponentClass<P> | React.SFC<P>): ThemedComponentClass<P, S>,
+    <P, S>(component: new(props?: P, context?: any) => React.Component<P, S>): ThemedComponentClass<P, S>
+  }
 
   export function themr(identifier: string | number | symbol,
                         defaultTheme?: {},
-                        options?: IThemrOptions): TThemrDecorator;
+                        options?: IThemrOptions): IThemrDecorator;
 }

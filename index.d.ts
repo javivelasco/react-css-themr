@@ -18,11 +18,9 @@ declare module "react-css-themr" {
   }
 
   export class ThemeProvider extends React.Component<ThemeProviderProps, any> {
-
   }
 
   interface ThemedComponent<P, S> extends React.Component<P, S> {
-
   }
 
   interface ThemedComponentClass<P, S> extends React.ComponentClass<P> {
@@ -30,7 +28,7 @@ declare module "react-css-themr" {
   }
 
   export function themr(
-    identifier: string,
+    identifier: string | number | symbol,
     defaultTheme?: {},
     options?: IThemrOptions
   ): <P, S>(component: new(props?: P, context?: any) => React.Component<P, S>) => ThemedComponentClass<P, S>;

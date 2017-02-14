@@ -30,7 +30,7 @@ declare module "react-css-themr"
 	}
 
 	export function themr(
-		identifier: string,
+		identifier: string | number | symbol,
 		defaultTheme?: {},
 		options?: IThemrOptions
   ): <P, S>(component: (new(props?: P, context?: any) => React.Component<P, S>) | React.SFC<P>) => ThemedComponentClass<P, S>;

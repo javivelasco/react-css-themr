@@ -33,5 +33,5 @@ declare module "react-css-themr"
 		identifier: string,
 		defaultTheme?: {},
 		options?: IThemrOptions
-	): <P, S>(component: (new(props?: P, context?: any) => React.Component<P, S> | React.SFC<P>)) => ThemedComponentClass<P, S>;
+  ): <P, S>(component: (new(props?: P, context?: any) => React.Component<P, S>) | React.SFC<P>) => ThemedComponentClass<P, S>;
 }

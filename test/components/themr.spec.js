@@ -607,4 +607,16 @@ describe('themeable function', () => {
     const result = themeable(a, b, c)
     expect(result).toEqual(expected)
   })
+
+  it('should skip undefined mixin values', () => {
+    const a = {
+      test: 'a'
+    }
+    const b = {
+      test: undefined
+    }
+    const expected = a
+    const result = themeable(a, b)
+    expect(result).toEqual(expected)
+  })
 })

@@ -207,6 +207,7 @@ function merge(original = {}, mixin = {}) {
         break
       }
 
+      case 'undefined': //fallthrough - handles accidentally unset values which may come from props
       case 'function': {
         //this handles issue when isomorphic-style-loader addes helper functions to css-module
         break //just skip

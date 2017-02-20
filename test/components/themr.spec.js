@@ -510,7 +510,7 @@ describe('themeable function', () => {
     expect(result).toEqual(expected)
   })
 
-  it('should skip dupplicated keys classNames', () => {
+  it('should skip duplicated keys classNames', () => {
     const themeA = { test: 'test' }
     const themeB = { test: 'test test2' }
     const expected = { test: 'test test2' }
@@ -518,9 +518,105 @@ describe('themeable function', () => {
     expect(result).toEqual(expected)
   })
 
-  it('throws an exception when its called mixing a string with an object', () => {
-    expect(() => {
-      themeable('fail', { test: { foo: 'baz' } })
-    }).toThrow(/sure you are passing the proper theme descriptors/)
+  it('should take mixin value if original does not contain one', () => {
+    const themeA = {}
+    const themeB = {
+      test: 'test',
+      nested: {
+        bar: 'bar'
+      }
+    }
+    const expected = themeB
+    const result = themeable(themeA, themeB)
+    expect(result).toEqual(expected)
+  })
+
+  it('should take original value if mixin does not contain one', () => {
+    const themeA = {
+      test: 'test',
+      nested: {
+        bar: 'bar'
+      }
+    }
+    const themeB = {}
+    const expected = themeA
+    const result = themeable(themeA, themeB)
+    expect(result).toEqual(expected)
+  })
+
+  it('should skip function values for usage with isomorphic-style-loader', () => {
+    const themeA = {
+      test: 'test',
+      foo() {
+      }
+    }
+
+    const themeB = {
+      test: 'test2',
+      bar() {
+      }
+    }
+
+    const expected = {
+      test: [
+        themeA.test, themeB.test
+      ].join(' ')
+    }
+
+    const result = themeable(themeA, themeB)
+    expect(result).toEqual(expected)
+  })
+
+  it('should throw when merging objects with non-objects', () => {
+    const themeA = {
+      test: 'test'
+    }
+    const themeB = {
+      test: {
+      }
+    }
+    expect(() => themeable(themeA, themeB)).toThrow()
+  })
+
+  it('should throw when merging non-objects with objects', () => {
+    const themeA = {
+      test: {
+      }
+    }
+    const themeB = {
+      test: 'test'
+    }
+    expect(() => themeable(themeA, themeB)).toThrow()
+  })
+
+  it('should support theme spreads', () => {
+    const a = {
+      test: 'a'
+    }
+    const b = {
+      test: 'b'
+    }
+    const c = {
+      test: 'foo',
+      foo: 'foo'
+    }
+    const expected = {
+      test: 'a b foo',
+      foo: 'foo'
+    }
+    const result = themeable(a, b, c)
+    expect(result).toEqual(expected)
+  })
+
+  it('should skip undefined mixin values', () => {
+    const a = {
+      test: 'a'
+    }
+    const b = {
+      test: undefined
+    }
+    const expected = a
+    const result = themeable(a, b)
+    expect(result).toEqual(expected)
   })
 })

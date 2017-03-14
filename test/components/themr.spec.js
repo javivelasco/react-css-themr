@@ -349,6 +349,17 @@ describe('Themr decorator function', () => {
     expect(Foo.defaultProps.foo).toBe(defaultProps.foo)
   })
 
+  it('should copy non-react statics from ThemedComponent', () => {
+    const meta = { name: 'Foo' }
+
+    @themr('Foo')
+    class Foo extends Component {
+      static meta = meta;
+    }
+
+    expect(Foo.meta.name).toBe(meta.name)
+  })
+
   it('should not wrap multiple time if used with already wrapped component with the same key', () => {
     const foo = {
       foo: 'foo'

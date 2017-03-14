@@ -24,6 +24,7 @@
     "theming"
   ],
   "dependencies": {
+    "hoist-non-react-statics": "^1.2.0",
     "invariant": "^2.2.1"
   },
   "devDependencies": {

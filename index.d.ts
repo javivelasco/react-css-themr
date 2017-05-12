@@ -4,17 +4,21 @@ declare module "react-css-themr" {
   type TReactCSSThemrTheme = {
     [key: string]: string | TReactCSSThemrTheme
   }
+  type TMapThemrProps<P> = (ownProps: P, theme: TReactCSSThemrTheme) => P & { theme: TReactCSSThemrTheme }
 
   export function themeable(...themes: Array<TReactCSSThemrTheme>): TReactCSSThemrTheme;
 
   export interface IThemrOptions {
     /** @default "deeply" */
     composeTheme?: "deeply" | "softly" | false,
+    //currently there's no way to lift decorated component's generic type argument (P) to upper decorator
+    //that's why just {}
+    mapThemrProps?: TMapThemrProps<{}>
   }
 
   export interface ThemeProviderProps {
     innerRef?: Function,
-    theme: {}
+    theme: TReactCSSThemrTheme
   }
 
   export class ThemeProvider extends React.Component<ThemeProviderProps, any> {
@@ -31,5 +35,6 @@ declare module "react-css-themr" {
     identifier: string | number | symbol,
     defaultTheme?: {},
     options?: IThemrOptions
-  ): <P, S>(component: (new(props?: P, context?: any) => React.Component<P, S>) | React.SFC<P>) => ThemedComponentClass<P, S>;
+  ): <P, S>(component: (new(props?: P, context?: any) => React.Component<P, S>) | React.SFC<P>) =>
+    ThemedComponentClass<P & { mapThemrProps?: TMapThemrProps<P> }, S>;
 }

@@ -158,12 +158,13 @@ Makes available a `theme` context to use in styled components. The shape of the 
 
 Returns a `function` to wrap a component and make it themeable.
 
-The returned component accepts a `theme`, `composeTheme` and `innerRef` props apart from the props of the original component. They former two are used to provide a `theme` to the component and to configure the style composition, which can be configured via options too, while the latter is used to pass a ref callback to the decorated component. The function arguments are:
+The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThemrProps` props apart from the props of the original component. They former two are used to provide a `theme` to the component and to configure the style composition, which can be configured via options too. `innerRef` is used to pass a ref callback to the decorated component and `mapThemrProps` is a function that can be used to map properties to the decorated component. The function arguments are:
 
 - `Identifier` *(String)* used to provide a unique identifier to the component that will be used to get a theme from context.
 - `[defaultTheme]` (*Object*) is  classname object resolved from CSS modules. It will be used as the default theme to calculate a new theme that will be passed to the component.
 - `[options]` (*Object*) If specified it allows to customize the behavior: 
   - [`composeTheme = 'deeply'`] *(String)* allows to customize the way themes are merged or to disable merging completely. The accepted values are `deeply` to deeply merge themes, `softly` to softly merge themes and `false` to disable theme merging.
+  - [`mapThemrProps = (props, theme) => ({ ref, theme })`] *(Function)* allows to customize how properties are passed down to the decorated component. By default, themr extracts all own properties passing down just `innerRef` as `ref` and the generated theme as `theme`. If you are decorating a component that needs to map the reference or any other custom property, this function is called with *all* properties given to the component plus the generated `theme` in the second parameter. It should return the properties you want to pass.
 
 ## About
 

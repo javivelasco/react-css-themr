@@ -157,6 +157,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
 /**
  * Merges passed themes by concatenating string keys and processing nested themes
+ *
  * @param {...TReactCSSThemrTheme} themes - Themes
  * @returns {TReactCSSThemrTheme} - Resulting theme
  */
@@ -253,6 +254,7 @@ function merge(original = {}, mixin = {}) {
 
 /**
  * Validates compose option
+ *
  * @param {String|Boolean} composeTheme - Compose them option
  * @throws
  * @returns {undefined}
@@ -269,6 +271,7 @@ function validateComposeOption(composeTheme) {
 
 /**
  * Removes namespace from key
+ *
  * @param {String} key - Key
  * @param {String} themeNamespace - Theme namespace
  * @returns {String} - Key
@@ -278,6 +281,14 @@ function removeNamespace(key, themeNamespace) {
   return capitalized.slice(0, 1).toLowerCase() + capitalized.slice(1)
 }
 
+/**
+ * Maps props and theme to an object that will be used to pass down props to the
+ * decorated component.
+ *
+ * @param {Object} ownProps - All props given to the decorated component
+ * @param {Object} theme - Calculated then that should be passed down
+ * @returns {Object} - Props that will be passed down to the decorated component
+ */
 function defaultMapThemrProps(ownProps, theme) {
   const {
     composeTheme,   //eslint-disable-line no-unused-vars

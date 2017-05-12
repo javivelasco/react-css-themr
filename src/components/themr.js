@@ -17,7 +17,8 @@ const COMPOSE_SOFTLY = 'softly'
 const DONT_COMPOSE = false
 
 const DEFAULT_OPTIONS = {
-  composeTheme: COMPOSE_DEEPLY
+  composeTheme: COMPOSE_DEEPLY,
+  mapThemrProps: defaultMapThemrProps
 }
 
 const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
@@ -32,7 +33,10 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
  * @returns {function(ThemedComponent:Function):Function} - ThemedComponent
  */
 export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
-  const { composeTheme: optionComposeTheme } = { ...DEFAULT_OPTIONS, ...options }
+  const {
+    composeTheme: optionComposeTheme,
+    mapThemrProps: optionMapThemrProps
+  } = { ...DEFAULT_OPTIONS, ...options }
   validateComposeOption(optionComposeTheme)
 
   let config = ThemedComponent[THEMR_CONFIG]
@@ -61,12 +65,14 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
       innerRef: PropTypes.func,
       theme: PropTypes.object,
-      themeNamespace: PropTypes.string
+      themeNamespace: PropTypes.string,
+      mapThemrProps: PropTypes.func
     }
 
     static defaultProps = {
       ...ThemedComponent.defaultProps,
-      composeTheme: optionComposeTheme
+      composeTheme: optionComposeTheme,
+      mapThemrProps: optionMapThemrProps
     }
 
     constructor(...args) {
@@ -106,14 +112,6 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
         : {}
     }
 
-    getPropsForComponent() {
-      //exclude themr-only props
-      //noinspection JSUnusedLocalSymbols
-      const { composeTheme, innerRef, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
-
-      return props
-    }
-
     getTheme(props) {
       return props.composeTheme === COMPOSE_SOFTLY
         ? {
@@ -145,14 +143,10 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     render() {
-      const { innerRef } = this.props
-      const props = this.getPropsForComponent()
-
-      return React.createElement(ThemedComponent, {
-        ...props,
-        ref: innerRef,
-        theme: this.theme_
-      })
+      return React.createElement(
+        ThemedComponent,
+        this.props.mapThemrProps(this.props, this.theme_)
+      )
     }
   }
 
@@ -282,4 +276,19 @@ function validateComposeOption(composeTheme) {
 function removeNamespace(key, themeNamespace) {
   const capitalized = key.substr(themeNamespace.length)
   return capitalized.slice(0, 1).toLowerCase() + capitalized.slice(1)
+}
+
+function defaultMapThemrProps(ownProps, theme) {
+  const {
+    composeTheme,   //eslint-disable-line no-unused-vars
+    innerRef,
+    themeNamespace, //eslint-disable-line no-unused-vars
+    ...rest
+  } = ownProps
+
+  return {
+    ...rest,
+    ref: innerRef,
+    theme
+  }
 }

@@ -293,6 +293,50 @@ describe('Themr decorator function', () => {
     expect(spy.withArgs(stub).calledOnce).toBe(true)
   })
 
+  it('allows to customize props passing using mapThemrProps from props', () => {
+    class Container extends Component {
+      render() {
+        return <Passthrough {...this.props} />
+      }
+    }
+
+    const spy = sinon.stub()
+    const hoc = C => ({ withRef, ...rest }) => (<C ref={withRef} {...rest} />)
+    const customMapper = (props, theme) => {
+      const { composeTheme, innerRef, mapThemrProps, themeNamespace, ...rest } = props //eslint-disable-line no-unused-vars
+      return { withRef: innerRef, theme, className: 'fooClass', ...rest }
+    }
+    const theme = {}
+    const DecoratedContainer = hoc(Container)
+    const ThemedDecoratedContainer = themr('Container', theme)(DecoratedContainer)
+    const tree = TestUtils.renderIntoDocument(<ThemedDecoratedContainer innerRef={spy} mapThemrProps={customMapper} />)
+    const stub = TestUtils.findRenderedComponentWithType(tree, Container)
+    expect(spy.withArgs(stub).calledOnce).toBe(true)
+    expect(stub.props).toMatch({ theme, className: 'fooClass' })
+  })
+
+  it('allows to customize props passing using mapThemrProps from options', () => {
+    class Container extends Component {
+      render() {
+        return <Passthrough {...this.props} />
+      }
+    }
+
+    const spy = sinon.stub()
+    const hoc = C => ({ withRef, ...rest }) => (<C ref={withRef} {...rest} />)
+    const customMapper = (props, theme) => {
+      const { composeTheme, innerRef, mapThemrProps, themeNamespace, ...rest } = props //eslint-disable-line no-unused-vars
+      return { withRef: innerRef, theme, className: 'fooClass', ...rest }
+    }
+    const theme = {}
+    const DecoratedContainer = hoc(Container)
+    const ThemedDecoratedContainer = themr('Container', {}, { mapThemrProps: customMapper })(DecoratedContainer)
+    const tree = TestUtils.renderIntoDocument(<ThemedDecoratedContainer innerRef={spy} />)
+    const stub = TestUtils.findRenderedComponentWithType(tree, Container)
+    expect(spy.withArgs(stub).calledOnce).toBe(true)
+    expect(stub.props).toMatch({ theme, className: 'fooClass' })
+  })
+
   it('should throw if themeNamespace passed without theme', () => {
     const theme = { Container: { foo: 'foo_1234' } }
 

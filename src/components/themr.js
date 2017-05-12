@@ -105,6 +105,14 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
         : {}
     }
 
+    getPropsForComponent() {
+      //exclude themr-only props
+      //noinspection JSUnusedLocalSymbols
+      const { composeTheme, innerRef, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
+
+      return props
+    }
+
     getTheme(props) {
       return props.composeTheme === COMPOSE_SOFTLY
         ? {
@@ -136,9 +144,8 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     render() {
-      //exclude themr-only props
-      //noinspection JSUnusedLocalSymbols
-      const { composeTheme, innerRef, themeNamespace, ...props } = this.props //eslint-disable-line no-unused-vars
+      const { innerRef } = this.props
+      const props = this.getPropsForComponent()
 
       return React.createElement(ThemedComponent, {
         ...props,

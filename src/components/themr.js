@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import invariant from 'invariant'
 
 /**
@@ -149,7 +150,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
   Themed[THEMR_CONFIG] = config
 
-  return Themed
+  return hoistNonReactStatics(Themed, ThemedComponent)
 }
 
 /**

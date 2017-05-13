@@ -294,7 +294,7 @@ function defaultMapThemrProps(ownProps, theme) {
     composeTheme,   //eslint-disable-line no-unused-vars
     innerRef,
     themeNamespace, //eslint-disable-line no-unused-vars
-    mapThemrProps,
+    mapThemrProps,  //eslint-disable-line no-unused-vars
     ...rest
   } = ownProps
 

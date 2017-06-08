@@ -222,14 +222,7 @@ function merge(original = {}, mixin = {}) {
         switch (typeof originalValue) {
           case 'object': {
             //can't merge a non-object with an object
-            if (mixinValue === '// removed by extract-text-webpack-plugin') {
-              // when the source style is empty / contain only :global rules,
-              // extract-text-webpack-plugin put string instead of json, which break the merge.
-              // this if prevent this specific case
-              // https://github.com/javivelasco/react-css-themr/issues/66
-              break;
-            }
-            throw new Error(`You are merging non-object ${mixinValue} with an object ${key}`)
+            throw new Error(`You are merging non-object ${mixinValue} with an object ${key}, (can occur when using empty or :global only base theme stylesheet)`)
           }
 
           case 'undefined': {

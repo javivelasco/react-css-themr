@@ -158,7 +158,7 @@ Makes available a `theme` context to use in styled components. The shape of the 
 
 Returns a `function` to wrap a component and make it themeable.
 
-The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThemrProps` props apart from the props of the original component. They former two are used to provide a `theme` to the component and to configure the style composition, which can be configured via options too. `innerRef` is used to pass a ref callback to the decorated component and `mapThemrProps` is a function that can be used to map properties to the decorated component. The function arguments are:
+The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThemrProps` props apart from the props of the original component. The former two are used to provide a `theme` to the component and to configure the style composition, which can be configured via options too. `innerRef` is used to pass a ref callback to the decorated component and `mapThemrProps` is a function that can be used to map properties to the decorated component. The function arguments are:
 
 - `Identifier` *(String)* used to provide a unique identifier to the component that will be used to get a theme from context.
 - `[defaultTheme]` (*Object*) is  classname object resolved from CSS modules. It will be used as the default theme to calculate a new theme that will be passed to the component.

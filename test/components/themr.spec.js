@@ -1,6 +1,7 @@
 import expect from 'expect'
-import React, { Children, PropTypes, Component } from 'react'
-import TestUtils from 'react-addons-test-utils'
+import PropTypes from 'prop-types';
+import React, { Children, Component } from 'react';
+import TestUtils from 'react-dom/test-utils'
 import sinon from 'sinon'
 import { render } from 'react-dom'
 import shallowEqual from 'fbjs/lib/shallowEqual'

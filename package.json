@@ -25,7 +25,8 @@
   ],
   "dependencies": {
     "hoist-non-react-statics": "^1.2.0",
-    "invariant": "^2.2.1"
+    "invariant": "^2.2.1",
+    "prop-types": "15.6.0"
   },
   "devDependencies": {
     "@types/react": "^15.0.24",
@@ -44,9 +45,8 @@
     "fbjs": "^0.8.12",
     "jsdom": "^9.8.3",
     "mocha": "^3.3.0",
-    "prop-types": "^15.5.9",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
     "rimraf": "^2.6.1",
     "sinon": "^1.17.6"
   },
@@ -64,7 +64,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0-0"
+    "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0"
   },
   "typings": "./index.d.ts"
 }

@@ -168,7 +168,7 @@ The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThe
 
 ## About
 
-The project is originally authored by [Javi Velasco](http://www.javivelasco.com) as an effort of providing a better customization experience for [React Toolbox](http://www.react-toolbox.com). Any comments, improvements or feedback is highly appreciated.
+The project is originally authored by [Javi Velasco](http://www.javivelasco.com) as an effort of providing a better customization experience for [React Toolbox](http://react-toolbox.io). Any comments, improvements or feedback is highly appreciated.
 
 Thanks to [Nik Graf](http://www.twitter.com/nikgraf) and [Mark Dalgleish](http://www.twitter.com/markdalgleish) for their thoughts about theming and customization for React components.
 

@@ -1,6 +1,8 @@
 [![npm version](https://img.shields.io/npm/v/@friendsofreactjs/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/@friendsofreactjs/react-css-themr)
-[![Build Status](http://img.shields.io/travis/FriendsOfReactJS/@friendsofreactjs/react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/FriendsOfReactJS/@friendsofreactjs/react-css-themr)
+[![Build Status](http://img.shields.io/travis/FriendsOfReactJS/react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/FriendsOfReactJS/react-css-themr)
 [![NPM Status](http://img.shields.io/npm/dm/@friendsofreactjs/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/@friendsofreactjs/react-css-themr)
+[![Dependency Status](https://david-dm.org/FriendsOfReactJS/react-css-themr.svg)](https://david-dm.org/FriendsOfReactJS/react-css-themr) [![devDependency Status](https://david-dm.org/FriendsOfReactJS/react-css-themr/dev-status.svg)](https://david-dm.org/FriendsOfReactJS/react-css-themr#info=devDependencies&view=table)
+[![Twitter](https://img.shields.io/twitter/follow/friendsofreact.svg?style=social)](https://twitter.com/friendsofreact)
 
 # Friends of react: React CSS Themr
 

@@ -2,7 +2,7 @@
   "name": "@friendsofreactjs/react-css-themr",
   "description": "Friends of ReactJS: React CSS Themr",
   "homepage": "https://github.com/FriendsOfReactJS/@friendsofreactjs/react-css-themr#readme",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "main": "./lib",
   "author": {
     "email": "javier.velasco86@gmail.com",

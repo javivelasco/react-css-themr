@@ -4,6 +4,16 @@ import PropTypes from 'prop-types'
 import TestUtils from 'react-dom/test-utils'
 import { ThemeProvider } from '../../src/index'
 
+
+before(function () {
+  /* eslint-disable no-console */
+  console.error = function () {}
+})
+
+after(function () {
+  delete console.error
+})
+
 describe('ThemeProvider', () => {
   class Child extends Component {
     render() {

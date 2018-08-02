@@ -92,8 +92,11 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     getNamespacedTheme(props) {
       const { themeNamespace, theme } = props
       if (!themeNamespace) return theme
-      if (themeNamespace && !theme) throw new Error('Invalid themeNamespace use in for-react-css-themr. ' +
+
+      if (themeNamespace && !theme) {
+        throw new Error('Invalid themeNamespace use in for-react-css-themr. ' +
         'themeNamespace prop should be used only with theme prop.')
+      }
 
       return Object.keys(theme)
         .filter(key => key.startsWith(themeNamespace))
@@ -223,6 +226,7 @@ function merge(original = {}, mixin = {}) {
           case 'object': {
             //can't merge a non-object with an object
             throw new Error(`You are merging non-object ${mixinValue} with an object ${key}`)
+            break
           }
 
           case 'undefined': {

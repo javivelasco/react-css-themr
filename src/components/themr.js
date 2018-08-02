@@ -26,20 +26,6 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
   '__REACT_CSS_THEMR_CONFIG__'
 
 /**
- * Add suppressReactErrorLogging = true to have no errors in the tests.
- *
- * @param {string} message error message that will be thrown
- * @return {void}
- */
-const logErrorMessage = message => {
-  const error = new Error(message)
-  if (process.env.NODE_ENV === 'TESTING') {
-    error.suppressReactErrorLogging = true
-  }
-  throw error
-}
-
-/**
  * Themr decorator
  * @param {String|Number|Symbol} componentName - Component name
  * @param {TReactCSSThemrTheme} [localTheme] - Base theme
@@ -108,7 +94,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       if (!themeNamespace) return theme
 
       if (themeNamespace && !theme) {
-        logErrorMessage('Invalid themeNamespace use in react-css-themr. ' +
+        throw new Error('Invalid themeNamespace use in react-css-themr. ' +
         'themeNamespace prop should be used only with theme prop.')
       }
 
@@ -222,7 +208,7 @@ function merge(original = {}, mixin = {}) {
 
           default: {
             //can't merge an object with a non-object
-            logErrorMessage(`You are merging object ${key} with a non-object ${originalValue}`)
+            throw new Error(`You are merging object ${key} with a non-object ${originalValue}`)
           }
         }
         break
@@ -239,7 +225,7 @@ function merge(original = {}, mixin = {}) {
         switch (typeof originalValue) {
           case 'object': {
             //can't merge a non-object with an object
-            logErrorMessage(`You are merging non-object ${mixinValue} with an object ${key}`)
+            throw new Error(`You are merging non-object ${mixinValue} with an object ${key}`)
             break
           }
 
@@ -279,7 +265,7 @@ function merge(original = {}, mixin = {}) {
  */
 function validateComposeOption(composeTheme) {
   if ([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ].indexOf(composeTheme) === -1) {
-    logErrorMessage(
+    throw new Error(
       `Invalid composeTheme option for react-css-themr. Valid composition options\
  are ${COMPOSE_DEEPLY}, ${COMPOSE_SOFTLY} and ${DONT_COMPOSE}. The given\
  option was ${composeTheme}`

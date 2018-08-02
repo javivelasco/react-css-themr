@@ -1,6 +1,6 @@
-[![npm version](https://img.shields.io/npm/v/for-react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/for-react-css-themr)
-[![Build Status](http://img.shields.io/travis/FriendsOfReactJS/for-react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/FriendsOfReactJS/for-react-css-themr)
-[![NPM Status](http://img.shields.io/npm/dm/for-react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/for-react-css-themr)
+[![npm version](https://img.shields.io/npm/v/@friendsofreactjs/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/@friendsofreactjs/react-css-themr)
+[![Build Status](http://img.shields.io/travis/FriendsOfReactJS/@friendsofreactjs/react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/FriendsOfReactJS/@friendsofreactjs/react-css-themr)
+[![NPM Status](http://img.shields.io/npm/dm/@friendsofreactjs/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/@friendsofreactjs/react-css-themr)
 
 # Friends of react: React CSS Themr
 
@@ -9,13 +9,13 @@
 This is a fork of React CSS Themr, that is not maintained anymore. We thank Javi Velasco for all his efforts and for
 creating such a great package. This package should not be unmaintained - so the friends of react will continue.
 
-Sadly Javi did not responed so we can not continue with the same package name. You find us now on npm with the prefix `for-`.
+Sadly Javi did not responed so we can not continue with the same package name. You find us now on npm with the prefix/scope `@friendsofreactjs`.
 ```
 
 Easy theming and composition for CSS Modules.
 
 ```
-$ npm install --save for-react-css-themr
+$ npm install --save @friendsofreactjs/react-css-themr
 ```
 
 **Note: Feedback and contributions on the docs are highly appreciated.**
@@ -30,7 +30,7 @@ Taking ideas from [future-react-ui](https://github.com/nikgraf/future-react-ui) 
 
 The most immediate way of providing a classname object is via *props*. In case you want to import a component with a theme already injected, you have to write a higher order component that does the job. This is ok for your own components, but for ui-kits like [React Toolbox](http://www.react-toolbox.com) or [Belle](http://nikgraf.github.io/belle/), you'd have to write a wrapper for every single component you want to use. In this fancy, you can understand the theme as a **set** of related classname objects for different components. It makes sense to group them together in a single object and move it through the component tree using a context. This way, you can provide a theme either via **context**, **hoc** or **props**.
 
-The approach of for-react-css-themr consists of a *provider* and a *decorator*. The provider sets a context theme. The decorator adds to your components the logic to figure out which theme should be used or how should it be composed, depending on configuration, context and props.
+The approach of @friendsofreactjs/react-css-themr consists of a *provider* and a *decorator*. The provider sets a context theme. The decorator adds to your components the logic to figure out which theme should be used or how should it be composed, depending on configuration, context and props.
 
 ## Combining CSS modules
 
@@ -49,7 +49,7 @@ Say you have a `Button` component you want to make themeable. You should pass a 
 ```jsx
 // Button.js
 import React, { Component } from 'react';
-import { themr } from 'for-react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 
 @themr('MyThemedButton')
 class Button extends Component {
@@ -88,7 +88,7 @@ If you use a component with a base theme, you may want to import the component w
 ```jsx
 // SuccessButton.js
 import React, { Component } from 'react';
-import { themr } from 'for-react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 import successTheme from './SuccessButton.css';
 
 @themr('MySuccessButton', successTheme)
@@ -137,7 +137,7 @@ Although context theming is not limited to ui-kits, it's very useful to avoid de
 ```jsx
 import React from 'react';
 import { render } from 'react-dom';
-import { ThemeProvider } from 'for-react-css-themr';
+import { ThemeProvider } from '@friendsofreactjs/react-css-themr';
 import App from './app'
 
 const contextTheme = {
@@ -182,4 +182,4 @@ Thanks to [Nik Graf](http://www.twitter.com/nikgraf) and [Mark Dalgleish](http:/
 
 ## License
 
-This project is licensed under the terms of the [MIT license](https://github.com/FriendsOfReactJS/for-react-css-themr/blob/master/LICENSE).
+This project is licensed under the terms of the [MIT license](https://github.com/FriendsOfReactJS/@friendsofreactjs/react-css-themr/blob/master/LICENSE).

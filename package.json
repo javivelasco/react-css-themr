@@ -30,7 +30,7 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@types/react": "^15.0.24",
+    "@types/react": "^16.4.7",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",

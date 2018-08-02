@@ -1,7 +1,7 @@
 {
-  "name": "react-css-themr",
-  "description": "React CSS Themr",
-  "homepage": "https://github.com/javivelasco/react-css-themr#readme",
+  "name": "for-react-css-themr",
+  "description": "Friends of ReactJS: React CSS Themr",
+  "homepage": "https://github.com/FriendsOfReactJS/for-react-css-themr#readme",
   "version": "2.1.2",
   "main": "./lib",
   "author": {
@@ -11,17 +11,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/javivelasco/react-css-themr.git"
+    "url": "git+https://github.com/FriendsOfReactJS/for-react-css-themr.git"
   },
   "bugs": {
-    "url": "https://github.com/javivelasco/react-css-themr/issues"
+    "url": "https://github.com/FriendsOfReactJS/for-react-css-themr/issues"
   },
   "keywords": [
     "css-modules",
     "customization",
     "react",
     "react-css-themr",
-    "theming"
+    "theming",
+    "for-react-css-themr",
+    "friends of react"
   ],
   "dependencies": {
     "hoist-non-react-statics": "^1.2.0",

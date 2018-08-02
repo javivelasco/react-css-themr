@@ -67,5 +67,13 @@
   "directories": {
     "lib": "lib",
     "test": "test"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "expect",
+      "mocha",
+      "sinon",
+      "jsdom"
+    ]
   }
 }

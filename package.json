@@ -1,20 +1,16 @@
 {
   "name": "@friendsofreactjs/react-css-themr",
   "description": "Friends of ReactJS: React CSS Themr",
-  "homepage": "https://github.com/FriendsOfReactJS/@friendsofreactjs/react-css-themr#readme",
+  "homepage": "https://github.com/FriendsOfReactJS/react-css-themr#readme",
   "version": "3.0.0",
   "main": "./lib",
-  "author": {
-    "email": "javier.velasco86@gmail.com",
-    "name": "Javi Velasco",
-    "url": "http://javivelasco.com/"
-  },
+  "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FriendsOfReactJS/@friendsofreactjs/react-css-themr.git"
+    "url": "git+https://github.com/FriendsOfReactJS/react-css-themr.git"
   },
   "bugs": {
-    "url": "https://github.com/FriendsOfReactJS/@friendsofreactjs/react-css-themr/issues"
+    "url": "https://github.com/FriendsOfReactJS/react-css-themr/issues"
   },
   "keywords": [
     "css-modules",
@@ -67,5 +63,9 @@
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0"
   },
-  "typings": "./index.d.ts"
+  "typings": "./index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  }
 }

@@ -21,7 +21,7 @@
     "friends of react"
   ],
   "dependencies": {
-    "hoist-non-react-statics": "^1.2.0",
+    "hoist-non-react-statics": "^3.0.1",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
@@ -67,5 +67,15 @@
   "directories": {
     "lib": "lib",
     "test": "test"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "expect",
+      "mocha",
+      "sinon",
+      "jsdom",
+      "eslint",
+      "babel-eslint"
+    ]
   }
 }

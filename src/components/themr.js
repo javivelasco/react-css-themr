@@ -54,7 +54,7 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
    * @property {{wrappedInstance: *}} refs
    */
   class Themed extends Component {
-    static displayName = `Themed${ThemedComponent.name}`;
+    static displayName = `Themed${(ThemedComponent.displayName || ThemedComponent.name || "Component")}`;
 
     static contextTypes = {
       themr: PropTypes.object

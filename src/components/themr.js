@@ -92,8 +92,11 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     getNamespacedTheme(props) {
       const { themeNamespace, theme } = props
       if (!themeNamespace) return theme
-      if (themeNamespace && !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
+
+      if (themeNamespace && !theme) {
+        throw new Error('Invalid themeNamespace use in friendsofreactjs/react-css-themr. ' +
         'themeNamespace prop should be used only with theme prop.')
+      }
 
       return Object.keys(theme)
         .filter(key => key.startsWith(themeNamespace))
@@ -262,7 +265,7 @@ function merge(original = {}, mixin = {}) {
 function validateComposeOption(composeTheme) {
   if ([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ].indexOf(composeTheme) === -1) {
     throw new Error(
-      `Invalid composeTheme option for react-css-themr. Valid composition options\
+      `Invalid composeTheme option for friendsofreactjs/react-css-themr. Valid composition options\
  are ${COMPOSE_DEEPLY}, ${COMPOSE_SOFTLY} and ${DONT_COMPOSE}. The given\
  option was ${composeTheme}`
     )

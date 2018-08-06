@@ -156,7 +156,7 @@ const content = (
 render(content, document.getElementById('app'));
 ```
 
-The main idea is to inject classnames objects for each component via context. This way you can have the whole theme in a single place and forget about including styles in every require. Any component `Button` or `Dialog` from will use the provided styles in the context.
+The main idea is to inject classnames objects for each component via context. This way you can have the whole theme in a single place and forget about including styles in every require. Any `Button` or `Dialog` component will use the styles provided in the context.
 
 ## API
 

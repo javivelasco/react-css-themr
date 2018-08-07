@@ -38,10 +38,8 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
-    "expect": "^1.18.0",
     "fbjs": "^0.8.17",
     "jsdom": "^9.8.3",
-    "mocha": "^3.3.0",
     "prettier": "^1.14.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
@@ -73,8 +71,6 @@
   },
   "greenkeeper": {
     "ignore": [
-      "expect",
-      "mocha",
       "jsdom"
     ]
   },

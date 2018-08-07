@@ -21,9 +21,10 @@ const DEFAULT_OPTIONS = {
   mapThemrProps: defaultMapThemrProps
 }
 
-const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
-  Symbol('THEMR_CONFIG') :
-  '__REACT_CSS_THEMR_CONFIG__'
+const THEMR_CONFIG =
+  typeof Symbol !== 'undefined'
+    ? Symbol('THEMR_CONFIG')
+    : '__REACT_CSS_THEMR_CONFIG__'
 
 /**
  * Themr decorator
@@ -32,7 +33,7 @@ const THEMR_CONFIG = typeof Symbol !== 'undefined' ?
  * @param {{}} [options] - Themr options
  * @returns {function(ThemedComponent:Function):Function} - ThemedComponent
  */
-export default (componentName, localTheme, options = {}) => (ThemedComponent) => {
+export default (componentName, localTheme, options = {}) => ThemedComponent => {
   const {
     composeTheme: optionComposeTheme,
     mapThemrProps: optionMapThemrProps
@@ -54,7 +55,9 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
    * @property {{wrappedInstance: *}} refs
    */
   class Themed extends Component {
-    static displayName = `Themed${(ThemedComponent.displayName || ThemedComponent.name || "Component")}`;
+    static displayName = `Themed${ThemedComponent.displayName ||
+      ThemedComponent.name ||
+      'Component'}`
 
     static contextTypes = {
       themr: PropTypes.object
@@ -62,7 +65,11 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
 
     static propTypes = {
       ...ThemedComponent.propTypes,
-      composeTheme: PropTypes.oneOf([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ]),
+      composeTheme: PropTypes.oneOf([
+        COMPOSE_DEEPLY,
+        COMPOSE_SOFTLY,
+        DONT_COMPOSE
+      ]),
       innerRef: PropTypes.func,
       theme: PropTypes.object,
       themeNamespace: PropTypes.string,
@@ -81,9 +88,10 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     }
 
     getWrappedInstance() {
-      invariant(true,
+      invariant(
+        true,
         'DEPRECATED: To access the wrapped instance, you have to pass ' +
-        '{ innerRef: fn } and retrieve with a callback ref style.'
+          '{ innerRef: fn } and retrieve with a callback ref style.'
       )
 
       return this.refs.wrappedInstance
@@ -94,13 +102,21 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       if (!themeNamespace) return theme
 
       if (themeNamespace && !theme) {
-        throw new Error('Invalid themeNamespace use in friendsofreactjs/react-css-themr. ' +
-        'themeNamespace prop should be used only with theme prop.')
+        throw new Error(
+          'Invalid themeNamespace use in friendsofreactjs/react-css-themr. ' +
+            'themeNamespace prop should be used only with theme prop.'
+        )
       }
 
       return Object.keys(theme)
         .filter(key => key.startsWith(themeNamespace))
-        .reduce((result, key) => ({ ...result, [removeNamespace(key, themeNamespace)]:  theme[key] }), {})
+        .reduce(
+          (result, key) => ({
+            ...result,
+            [removeNamespace(key, themeNamespace)]: theme[key]
+          }),
+          {}
+        )
     }
 
     getThemeNotComposed(props) {
@@ -118,14 +134,14 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     getTheme(props) {
       return props.composeTheme === COMPOSE_SOFTLY
         ? {
-          ...this.getContextTheme(),
-          ...config.localTheme,
-          ...this.getNamespacedTheme(props)
-        }
+            ...this.getContextTheme(),
+            ...config.localTheme,
+            ...this.getNamespacedTheme(props)
+          }
         : themeable(
-          themeable(this.getContextTheme(), config.localTheme),
-          this.getNamespacedTheme(props)
-        )
+            themeable(this.getContextTheme(), config.localTheme),
+            this.getNamespacedTheme(props)
+          )
     }
 
     calcTheme(props) {
@@ -208,7 +224,9 @@ function merge(original = {}, mixin = {}) {
 
           default: {
             //can't merge an object with a non-object
-            throw new Error(`You are merging object ${key} with a non-object ${originalValue}`)
+            throw new Error(
+              `You are merging object ${key} with a non-object ${originalValue}`
+            )
           }
         }
         break
@@ -225,7 +243,9 @@ function merge(original = {}, mixin = {}) {
         switch (typeof originalValue) {
           case 'object': {
             //can't merge a non-object with an object
-            throw new Error(`You are merging non-object ${mixinValue} with an object ${key}, (can occur when using empty or :global only base theme stylesheet)`)
+            throw new Error(
+              `You are merging non-object ${mixinValue} with an object ${key}, (can occur when using empty or :global only base theme stylesheet)`
+            )
           }
 
           case 'undefined': {
@@ -240,9 +260,12 @@ function merge(original = {}, mixin = {}) {
 
           default: {
             //finally we can merge
-            result[key] = originalValue.split(' ')
+            result[key] = originalValue
+              .split(' ')
               .concat(mixinValue.split(' '))
-              .filter((item, pos, self) => self.indexOf(item) === pos && item !== '')
+              .filter(
+                (item, pos, self) => self.indexOf(item) === pos && item !== ''
+              )
               .join(' ')
             break
           }
@@ -263,7 +286,9 @@ function merge(original = {}, mixin = {}) {
  * @returns {undefined}
  */
 function validateComposeOption(composeTheme) {
-  if ([ COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE ].indexOf(composeTheme) === -1) {
+  if (
+    [COMPOSE_DEEPLY, COMPOSE_SOFTLY, DONT_COMPOSE].indexOf(composeTheme) === -1
+  ) {
     throw new Error(
       `Invalid composeTheme option for friendsofreactjs/react-css-themr. Valid composition options\
  are ${COMPOSE_DEEPLY}, ${COMPOSE_SOFTLY} and ${DONT_COMPOSE}. The given\
@@ -294,10 +319,10 @@ function removeNamespace(key, themeNamespace) {
  */
 function defaultMapThemrProps(ownProps, theme) {
   const {
-    composeTheme,   //eslint-disable-line no-unused-vars
+    composeTheme, //eslint-disable-line no-unused-vars
     innerRef,
     themeNamespace, //eslint-disable-line no-unused-vars
-    mapThemrProps,  //eslint-disable-line no-unused-vars
+    mapThemrProps, //eslint-disable-line no-unused-vars
     ...rest
   } = ownProps
 

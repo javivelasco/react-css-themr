@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import expect from 'expect'
 import PropTypes from 'prop-types'
 import TestUtils from 'react-dom/test-utils'
 import { ThemeProvider } from '../../src/index'
 
-before(function() {
-  /* eslint-disable no-console */
-  console.error = function() {}
+beforeEach(() => {
+  jest.spyOn(console, 'error')
+  global.console.error.mockImplementation(() => {})
 })
 
-after(function() {
-  delete console.error
+afterEach(() => {
+  global.console.error.mockRestore()
 })
 
 describe('ThemeProvider', () => {
@@ -24,7 +23,7 @@ describe('ThemeProvider', () => {
     themr: PropTypes.object.isRequired
   }
 
-  it('enforces a single child', () => {
+  test('enforces a single child', () => {
     const theme = {}
 
     // Ignore propTypes warnings
@@ -38,7 +37,7 @@ describe('ThemeProvider', () => {
             <div />
           </ThemeProvider>
         )
-      ).toNotThrow()
+      ).not.toThrow()
 
       expect(() =>
         TestUtils.renderIntoDocument(
@@ -57,7 +56,7 @@ describe('ThemeProvider', () => {
     }
   })
 
-  it('should add the theme to the child context', () => {
+  test('should add the theme to the child context', () => {
     const theme = {}
 
     TestUtils.renderIntoDocument(
@@ -66,14 +65,13 @@ describe('ThemeProvider', () => {
       </ThemeProvider>
     )
 
-    const spy = expect.spyOn(console, 'error')
+    const spy = jest.spyOn(console, 'error')
     const tree = TestUtils.renderIntoDocument(
       <ThemeProvider theme={theme}>
         <Child />
       </ThemeProvider>
     )
-    spy.destroy()
-    expect(spy.calls.length).toBe(0)
+    expect(spy.mock.calls.length).toBe(0)
 
     const child = TestUtils.findRenderedComponentWithType(tree, Child)
     expect(child.context.themr.theme).toBe(theme)

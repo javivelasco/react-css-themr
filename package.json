@@ -59,7 +59,7 @@
     "lint": "eslint src test",
     "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "prepublish": "rimraf lib && npm run build",
-    "test": "mocha --compilers js:babel-core/register --recursive --reporter spec --require ./test/setup.js",
+    "test": "jest",
     "test:watch": "npm test -- --watch"
   },
   "license": "MIT",
@@ -77,5 +77,9 @@
       "mocha",
       "jsdom"
     ]
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
   }
 }

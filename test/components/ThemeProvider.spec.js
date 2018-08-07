@@ -4,13 +4,12 @@ import PropTypes from 'prop-types'
 import TestUtils from 'react-dom/test-utils'
 import { ThemeProvider } from '../../src/index'
 
-
-before(function () {
+before(function() {
   /* eslint-disable no-console */
-  console.error = function () {}
+  console.error = function() {}
 })
 
-after(function () {
+after(function() {
   delete console.error
 })
 
@@ -33,23 +32,26 @@ describe('ThemeProvider', () => {
     ThemeProvider.propTypes = {}
 
     try {
-      expect(() => TestUtils.renderIntoDocument(
-        <ThemeProvider theme={theme}>
-          <div />
-        </ThemeProvider>
-      )).toNotThrow()
+      expect(() =>
+        TestUtils.renderIntoDocument(
+          <ThemeProvider theme={theme}>
+            <div />
+          </ThemeProvider>
+        )
+      ).toNotThrow()
 
-      expect(() => TestUtils.renderIntoDocument(
-        <ThemeProvider theme={theme}>
-          <div />
-          <div />
-        </ThemeProvider>
-      )).toThrow(/expected to receive a single React element child/)
+      expect(() =>
+        TestUtils.renderIntoDocument(
+          <ThemeProvider theme={theme}>
+            <div />
+            <div />
+          </ThemeProvider>
+        )
+      ).toThrow(/expected to receive a single React element child/)
 
-      expect(() => TestUtils.renderIntoDocument(
-        <ThemeProvider theme={theme}>
-        </ThemeProvider>
-      )).toThrow(/expected to receive a single React element child/)
+      expect(() =>
+        TestUtils.renderIntoDocument(<ThemeProvider theme={theme} />)
+      ).toThrow(/expected to receive a single React element child/)
     } finally {
       ThemeProvider.propTypes = propTypes
     }

@@ -11,7 +11,14 @@ describe('Themr decorator function', () => {
   class Passthrough extends Component {
     render() {
       const { theme, ...props } = this.props //eslint-disable-line no-unused-vars
-      return <div ref={(node) => { this.rootNode = node }} {...props} />
+      return (
+        <div
+          ref={node => {
+            this.rootNode = node
+          }}
+          {...props}
+        />
+      )
     }
   }
 
@@ -29,7 +36,7 @@ describe('Themr decorator function', () => {
     }
   }
 
-  it('passes a context theme object using the component\'s context', () => {
+  it("passes a context theme object using the component's context", () => {
     const theme = { Container: { foo: 'foo_1234' } }
 
     @themr('Container')
@@ -49,7 +56,7 @@ describe('Themr decorator function', () => {
     expect(container.context.themr.theme).toBe(theme)
   })
 
-  it('passes a context theme object using the component\'s theme prop', () => {
+  it("passes a context theme object using the component's theme prop", () => {
     const containerTheme = { foo: 'foo_1234' }
     const theme = { Container: containerTheme }
 
@@ -255,7 +262,8 @@ describe('Themr decorator function', () => {
   it('throws an error if an invalid composition option passed', () => {
     expect(() => {
       @themr('Container', null, { composeTheme: 'foo' })
-      class Container extends Component { //eslint-disable-line no-unused-vars
+      class Container extends Component {
+        //eslint-disable-line no-unused-vars
         render() {
           return <Passthrough {...this.props} />
         }
@@ -271,9 +279,7 @@ describe('Themr decorator function', () => {
       }
     }
 
-    const tree = TestUtils.renderIntoDocument(
-      <Container />
-    )
+    const tree = TestUtils.renderIntoDocument(<Container />)
 
     const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
     expect(stub.props.theme).toEqual({})
@@ -288,7 +294,9 @@ describe('Themr decorator function', () => {
 
     const spy = sinon.stub()
     const ThemedContainer = themr('Container')(Container)
-    const tree = TestUtils.renderIntoDocument(<ThemedContainer innerRef={spy} />)
+    const tree = TestUtils.renderIntoDocument(
+      <ThemedContainer innerRef={spy} />
+    )
     const stub = TestUtils.findRenderedComponentWithType(tree, Container)
     expect(spy.withArgs(stub).calledOnce).toBe(true)
   })
@@ -301,15 +309,25 @@ describe('Themr decorator function', () => {
     }
 
     const spy = sinon.stub()
-    const hoc = C => ({ withRef, ...rest }) => (<C ref={withRef} {...rest} />)
+    const hoc = C => ({ withRef, ...rest }) => <C ref={withRef} {...rest} />
     const customMapper = (props, theme) => {
-      const { composeTheme, innerRef, mapThemrProps, themeNamespace, ...rest } = props //eslint-disable-line no-unused-vars
+      const {
+        composeTheme,
+        innerRef,
+        mapThemrProps,
+        themeNamespace,
+        ...rest
+      } = props //eslint-disable-line no-unused-vars
       return { withRef: innerRef, theme, className: 'fooClass', ...rest }
     }
     const theme = {}
     const DecoratedContainer = hoc(Container)
-    const ThemedDecoratedContainer = themr('Container', theme)(DecoratedContainer)
-    const tree = TestUtils.renderIntoDocument(<ThemedDecoratedContainer innerRef={spy} mapThemrProps={customMapper} />)
+    const ThemedDecoratedContainer = themr('Container', theme)(
+      DecoratedContainer
+    )
+    const tree = TestUtils.renderIntoDocument(
+      <ThemedDecoratedContainer innerRef={spy} mapThemrProps={customMapper} />
+    )
     const stub = TestUtils.findRenderedComponentWithType(tree, Container)
     expect(spy.withArgs(stub).calledOnce).toBe(true)
     expect(stub.props).toMatch({ theme, className: 'fooClass' })
@@ -323,15 +341,27 @@ describe('Themr decorator function', () => {
     }
 
     const spy = sinon.stub()
-    const hoc = C => ({ withRef, ...rest }) => (<C ref={withRef} {...rest} />)
+    const hoc = C => ({ withRef, ...rest }) => <C ref={withRef} {...rest} />
     const customMapper = (props, theme) => {
-      const { composeTheme, innerRef, mapThemrProps, themeNamespace, ...rest } = props //eslint-disable-line no-unused-vars
+      const {
+        composeTheme,
+        innerRef,
+        mapThemrProps,
+        themeNamespace,
+        ...rest
+      } = props //eslint-disable-line no-unused-vars
       return { withRef: innerRef, theme, className: 'fooClass', ...rest }
     }
     const theme = {}
     const DecoratedContainer = hoc(Container)
-    const ThemedDecoratedContainer = themr('Container', {}, { mapThemrProps: customMapper })(DecoratedContainer)
-    const tree = TestUtils.renderIntoDocument(<ThemedDecoratedContainer innerRef={spy} />)
+    const ThemedDecoratedContainer = themr(
+      'Container',
+      {},
+      { mapThemrProps: customMapper }
+    )(DecoratedContainer)
+    const tree = TestUtils.renderIntoDocument(
+      <ThemedDecoratedContainer innerRef={spy} />
+    )
     const stub = TestUtils.findRenderedComponentWithType(tree, Container)
     expect(spy.withArgs(stub).calledOnce).toBe(true)
     expect(stub.props).toMatch({ theme, className: 'fooClass' })
@@ -347,11 +377,15 @@ describe('Themr decorator function', () => {
       }
     }
 
-    expect(() => TestUtils.renderIntoDocument(
-      <ProviderMock theme={theme}>
-        <Container themeNamespace="container"/>
-      </ProviderMock>
-    )).toThrow(/Invalid themeNamespace use in friendsofreactjs\/react-css-themr. themeNamespace prop should be used only with theme prop./)
+    expect(() =>
+      TestUtils.renderIntoDocument(
+        <ProviderMock theme={theme}>
+          <Container themeNamespace="container" />
+        </ProviderMock>
+      )
+    ).toThrow(
+      /Invalid themeNamespace use in friendsofreactjs\/react-css-themr. themeNamespace prop should be used only with theme prop./
+    )
   })
 
   it('when providing a themeNamespace prop composes a theme', () => {
@@ -387,8 +421,8 @@ describe('Themr decorator function', () => {
     }
     @themr('Foo')
     class Foo extends Component {
-      static propTypes = propTypes;
-      static defaultProps = defaultProps;
+      static propTypes = propTypes
+      static defaultProps = defaultProps
     }
     expect(Foo.propTypes.foo).toBe(propTypes.foo)
     expect(Foo.defaultProps.foo).toBe(defaultProps.foo)
@@ -399,7 +433,7 @@ describe('Themr decorator function', () => {
 
     @themr('Foo')
     class Foo extends Component {
-      static meta = meta;
+      static meta = meta
     }
 
     expect(Foo.meta.name).toBe(meta.name)
@@ -423,7 +457,7 @@ describe('Themr decorator function', () => {
     const Bar = themr(key, bar)(Foo)
     expect(Bar).toBe(Foo)
 
-    const tree = TestUtils.renderIntoDocument(<Bar/>)
+    const tree = TestUtils.renderIntoDocument(<Bar />)
 
     const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
     expect(stub.props.theme).toEqual({
@@ -447,74 +481,63 @@ describe('Themr decorator function', () => {
       }
     }
 
-    render(
-      <Container />,
-      div
-    )
+    render(<Container />, div)
 
-    render(
-      <Container />,
-      div
-    )
+    render(<Container />, div)
 
     expect(spy.calledOnce).toBe(true)
   })
 
-  it(
-    'should update theme prop on rerender if theme or themeNamespace or composeTheme changed',
-    () => {
-      const spy = sinon.stub().returns(<div />)
-      const div = document.createElement('div')
+  it('should update theme prop on rerender if theme or themeNamespace or composeTheme changed', () => {
+    const spy = sinon.stub().returns(<div />)
+    const div = document.createElement('div')
 
-      @themr('Container')
-      class Container extends Component {
-        shouldComponentUpdate(nextProps) {
-          return !shallowEqual(nextProps, this.props)
-        }
-
-        render() {
-          return spy()
-        }
+    @themr('Container')
+    class Container extends Component {
+      shouldComponentUpdate(nextProps) {
+        return !shallowEqual(nextProps, this.props)
       }
-      const themeA = {}
-      const themeB = {}
-      const themeNamespace = 'nsA'
 
-      render(
-        <Container theme={themeA} />,
-        div
-      )
-
-      render(
-        <Container theme={themeB} />,
-        div
-      )
-
-      expect(spy.calledTwice).toBe(true)
-
-      render(
-        <Container theme={themeB} themeNamespace={themeNamespace} />,
-        div
-      )
-
-      expect(spy.calledThrice).toBe(true)
-
-
-      render(
-        <Container theme={themeB} themeNamespace={themeNamespace} composeTheme={'deeply'} />,
-        div
-      )
-
-      expect(spy.calledThrice).toBe(true)
-
-      render(
-        <Container theme={themeB} themeNamespace={themeNamespace} composeTheme={'softly'} />,
-        div
-      )
-
-      expect(spy.callCount === 4).toBe(true)
+      render() {
+        return spy()
+      }
     }
-  )
+    const themeA = {}
+    const themeB = {}
+    const themeNamespace = 'nsA'
+
+    render(<Container theme={themeA} />, div)
+
+    render(<Container theme={themeB} />, div)
+
+    expect(spy.calledTwice).toBe(true)
+
+    render(<Container theme={themeB} themeNamespace={themeNamespace} />, div)
+
+    expect(spy.calledThrice).toBe(true)
+
+    render(
+      <Container
+        theme={themeB}
+        themeNamespace={themeNamespace}
+        composeTheme={'deeply'}
+      />,
+      div
+    )
+
+    expect(spy.calledThrice).toBe(true)
+
+    render(
+      <Container
+        theme={themeB}
+        themeNamespace={themeNamespace}
+        composeTheme={'softly'}
+      />,
+      div
+    )
+
+    expect(spy.callCount === 4).toBe(true)
+  })
 
   it('should not pass internal themr props to WrappedComponent', () => {
     @themr('Container')
@@ -524,9 +547,7 @@ describe('Themr decorator function', () => {
       }
     }
 
-    const tree = TestUtils.renderIntoDocument(
-      <Container/>
-    )
+    const tree = TestUtils.renderIntoDocument(<Container />)
 
     const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough)
     expect(stub.props.themeNamespace).toNotExist()
@@ -603,20 +624,16 @@ describe('themeable function', () => {
   it('should skip function values for usage with isomorphic-style-loader', () => {
     const themeA = {
       test: 'test',
-      foo() {
-      }
+      foo() {}
     }
 
     const themeB = {
       test: 'test2',
-      bar() {
-      }
+      bar() {}
     }
 
     const expected = {
-      test: [
-        themeA.test, themeB.test
-      ].join(' ')
+      test: [themeA.test, themeB.test].join(' ')
     }
 
     const result = themeable(themeA, themeB)
@@ -628,16 +645,14 @@ describe('themeable function', () => {
       test: 'test'
     }
     const themeB = {
-      test: {
-      }
+      test: {}
     }
     expect(() => themeable(themeA, themeB)).toThrow()
   })
 
   it('should throw when merging non-objects with objects', () => {
     const themeA = {
-      test: {
-      }
+      test: {}
     }
     const themeB = {
       test: 'test'

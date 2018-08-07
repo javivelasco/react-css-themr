@@ -75,9 +75,7 @@
       "expect",
       "mocha",
       "sinon",
-      "jsdom",
-      "eslint",
-      "babel-eslint"
+      "jsdom"
     ]
   }
 }

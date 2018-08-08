@@ -22,7 +22,8 @@
   ],
   "dependencies": {
     "hoist-non-react-statics": "^3.0.1",
-    "invariant": "^2.2.4"
+    "invariant": "^2.2.4",
+    "jest": "^23.4.2"
   },
   "devDependencies": {
     "@types/react": "^16.4.7",
@@ -37,10 +38,8 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
-    "expect": "^1.18.0",
     "fbjs": "^0.8.17",
     "jsdom": "^9.8.3",
-    "mocha": "^3.3.0",
     "prettier": "^1.14.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
@@ -58,7 +57,7 @@
     "lint": "eslint src test",
     "lint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "prepublish": "rimraf lib && npm run build",
-    "test": "mocha --compilers js:babel-core/register --recursive --reporter spec --require ./test/setup.js",
+    "test": "jest",
     "test:watch": "npm test -- --watch"
   },
   "license": "MIT",
@@ -72,9 +71,11 @@
   },
   "greenkeeper": {
     "ignore": [
-      "expect",
-      "mocha",
       "jsdom"
     ]
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
   }
 }

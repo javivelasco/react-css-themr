@@ -1,9 +1,24 @@
-[![npm version](https://img.shields.io/npm/v/@friendsofreactjs/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/@friendsofreactjs/react-css-themr)
-[![Build Status](http://img.shields.io/travis/FriendsOfReactJS/react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/FriendsOfReactJS/react-css-themr)
-[![NPM Status](http://img.shields.io/npm/dm/@friendsofreactjs/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/@friendsofreactjs/react-css-themr)
-[![Dependency Status](https://david-dm.org/FriendsOfReactJS/react-css-themr.svg)](https://david-dm.org/FriendsOfReactJS/react-css-themr) [![devDependency Status](https://david-dm.org/FriendsOfReactJS/react-css-themr/dev-status.svg)](https://david-dm.org/FriendsOfReactJS/react-css-themr#info=devDependencies&view=table)
-[![Greenkeeper badge](https://badges.greenkeeper.io/FriendsOfReactJS/react-css-themr.svg)](https://greenkeeper.io/)
-[![Twitter](https://img.shields.io/twitter/follow/friendsofreact.svg?style=social)](https://twitter.com/friendsofreact)
+<p align="center">
+  <a href="https://www.npmjs.com/package/@friendsofreactjs/react-css-themr">
+    <img alt="npm version" src="https://img.shields.io/npm/v/@friendsofreactjs/react-css-themr.svg?style=flat-square">
+  </a>
+  <a href="https://www.npmjs.com/package/@friendsofreactjs/react-css-themr">
+    <img alt="monthly downloads from npm" src="https://img.shields.io/npm/dm/@friendsofreactjs/react-css-themr.svg?style=flat-square">
+  </a>
+  <a href="https://travis-ci.org/FriendsOfReactJS/react-css-themr">
+    <img alt="Travis CI Build Status" src="https://img.shields.io/travis/FriendsOfReactJS/react-css-themr/master.svg?style=flat-square&label=Travis+CI">
+  </a>
+  <a href="https://greenkeeper.io">
+    <img alt="We use greenkeeper" src="https://badges.greenkeeper.io/FriendsOfReactJS/react-css-themr.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/prettier/prettier">
+    <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
+  </a>
+  <a href="https://twitter.com/friendsofreact">
+    <img alt="Follow friends of react on Twitter" src="https://img.shields.io/twitter/follow/friendsofreact.svg?label=follow+friendsofreact&style=flat-square">
+  </a>
+</p>
+
 
 # Friends of react: React CSS Themr
 

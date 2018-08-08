@@ -1,10 +1,13 @@
 import React, { Children, Component } from 'react'
 import PropTypes from 'prop-types'
+import { jsdom } from 'jsdom'
 import TestUtils from 'react-dom/test-utils'
 import sinon from 'sinon'
 import { render } from 'react-dom'
 import shallowEqual from 'fbjs/lib/shallowEqual'
 import { themr, themeable } from '../../src/index'
+
+const documentDom = jsdom('<!doctype html><html><body></body></html>')
 
 describe('Themr decorator function', () => {
   class Passthrough extends Component {
@@ -36,6 +39,10 @@ describe('Themr decorator function', () => {
   }
 
   beforeEach(() => {
+    global.document = documentDom
+    global.window = document.defaultView
+    global.navigator = global.window.navigator
+
     jest.spyOn(console, 'error')
     global.console.error.mockImplementation(() => {})
   })

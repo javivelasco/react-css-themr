@@ -2,8 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TestUtils from 'react-dom/test-utils'
 import { ThemeProvider } from '../../src/index'
+import { jsdom } from 'jsdom'
 
+const documentDom = jsdom('<!doctype html><html><body></body></html>')
 beforeEach(() => {
+  global.document = documentDom
+  global.window = document.defaultView
+  global.navigator = global.window.navigator
+
   jest.spyOn(console, 'error')
   global.console.error.mockImplementation(() => {})
 })

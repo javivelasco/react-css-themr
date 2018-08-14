@@ -1,0 +1,6 @@
+{
+    "branch": "master",
+    "analyzeCommits": {
+        "preset": "eslint"
+    }
+}

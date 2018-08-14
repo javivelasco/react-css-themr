@@ -15,6 +15,7 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
   - yarn global add babel-cli
 after_success:
+  - npm config set scope friendsofreactjs
   - npm run travis-deploy-once "npm run semantic-release"
 branches:
   except:

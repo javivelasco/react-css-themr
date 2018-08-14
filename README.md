@@ -14,6 +14,9 @@
   <a href="https://github.com/prettier/prettier">
     <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
   </a>
+  <a href="https://github.com/semantic-release/semantic-release">
+    <img alt="We are using semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square">
+  </a>
   <a href="https://twitter.com/friendsofreact">
     <img alt="Follow friends of react on Twitter" src="https://img.shields.io/twitter/follow/friendsofreact.svg?label=follow+friendsofreact&style=flat-square">
   </a>
@@ -191,6 +194,28 @@ The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThe
 - `[options]` (*Object*) If specified it allows to customize the behavior: 
   - [`composeTheme = 'deeply'`] *(String)* allows to customize the way themes are merged or to disable merging completely. The accepted values are `deeply` to deeply merge themes, `softly` to softly merge themes and `false` to disable theme merging.
   - [`mapThemrProps = (props, theme) => ({ ref, theme })`] *(Function)* allows to customize how properties are passed down to the decorated component. By default, themr extracts all own properties passing down just `innerRef` as `ref` and the generated theme as `theme`. If you are decorating a component that needs to map the reference or any other custom property, this function is called with *all* properties given to the component plus the generated `theme` in the second parameter. It should return the properties you want to pass.
+
+## Contribution
+
+Contributions are always welcome. We try to make it as easy as possible.
+We are using semantic-release to have more time to concentrate on important stuff
+instead of struggling in the dependency or release hell.
+
+Therefore the first rule is to follow the [eslint commit message guideline](https://github.com/conventional-changelog-archived-repos/conventional-changelog-eslint/blob/master/convention.md).
+When you always commit via `yarn commit` this is really easy. Commitizen will guide you.
+
+### Development commands
+
+We have some yarn scripts that should make live easier. The deployment scripts are just for
+semantic-release and travis, but the following will help you.
+
+| Command         | Description                    |
+| --------------- | ------------------------------ |
+| `yarn build` |  Runs the development build. |
+| `yarn lint`  | Executes linter, we use prettier with eslint. |
+| `yarn test`  | Executes the jest test on all source files. |
+| `yarn test:watch`  | Perfect while writing tests is the watcher for test. |
+| `yarn commit`  | Executes commitizen to guide you for the correct commit message. |
 
 ## About
 

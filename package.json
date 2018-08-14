@@ -65,7 +65,7 @@
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "travis-deploy-once": "travis-deploy-once",
-    "semantic-release": "semantic-release",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "commit": "git-cz"
   },
   "license": "MIT",
@@ -85,5 +85,8 @@
     "commitizen": {
       "path": "./node_modules/cz-adapter-eslint"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

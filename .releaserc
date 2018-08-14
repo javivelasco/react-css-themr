@@ -1,5 +1,6 @@
 {
     "branch": "master",
+    "tagFormat": "${version}",
     "analyzeCommits": {
         "preset": "eslint"
     }

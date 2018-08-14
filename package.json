@@ -65,7 +65,7 @@
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "travis-deploy-once": "travis-deploy-once",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "commit": "git-cz"
   },
   "license": "MIT",

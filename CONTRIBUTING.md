@@ -1,5 +1,5 @@
 # Contributing to react-css-themr
-First time contributing to Homebrew? Read our [Code of Conduct](https://github.com/FriendsOfReactJS/react-css-themr/blob/develop/CODE_OF_CONDUCT.md#code-of-conduct).
+First time contributing to react? Read our [Code of Conduct](https://github.com/FriendsOfReactJS/react-css-themr/blob/develop/CODE_OF_CONDUCT.md#code-of-conduct).
 
 ### Report a bug
 

@@ -29,8 +29,6 @@
 ⚛️️️❗️❗️⚛️
 This is a fork of React CSS Themr, that is not maintained anymore. We thank Javi Velasco for all his efforts and for
 creating such a great package. This package should not be unmaintained - so the friends of react will continue.
-
-Sadly Javi did not responed so we can not continue with the same package name. You find us now on npm with the prefix/scope `@friendsofreactjs`.
 ```
 
 Easy theming and composition for CSS Modules.
@@ -197,7 +195,9 @@ The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThe
 
 ## Contribution
 
-Contributions are always welcome. We try to make it as easy as possible.
+We'd love you to contribute to Homebrew. First, please read our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md#code-of-conduct).
+
+We try to make it as easy as possible.
 We are using semantic-release to have more time to concentrate on important stuff
 instead of struggling in the dependency or release hell.
 

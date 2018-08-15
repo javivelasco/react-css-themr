@@ -204,6 +204,11 @@ instead of struggling in the dependency or release hell.
 Therefore the first rule is to follow the [eslint commit message guideline](https://github.com/conventional-changelog-archived-repos/conventional-changelog-eslint/blob/master/convention.md).
 When you always commit via `yarn commit` this is really easy. Commitizen will guide you.
 
+All PRs will be merged into the develop branch. When we merge the develop into the master
+travis and semantic release will build a new release.
+
+So no one can directly push into master!
+
 ### Development commands
 
 We have some yarn scripts that should make live easier. The deployment scripts are just for

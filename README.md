@@ -198,7 +198,7 @@ The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThe
 
 ## Contribution
 
-We'd love you to contribute to Homebrew. First, please read our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md#code-of-conduct).
+We'd love you to contribute to react-css-themr. First, please read our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md#code-of-conduct).
 
 We try to make it as easy as possible.
 We are using semantic-release to have more time to concentrate on important stuff

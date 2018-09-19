@@ -86,6 +86,26 @@
       "path": "./node_modules/cz-adapter-eslint"
     }
   },
+  "greenkeeper": {
+    "commitMessages": {
+      "initialBadge": "Docs: add Greenkeeper badge",
+      "initialDependencies": "Upgrade: update dependencies",
+      "initialBranches": "Update: whitelist greenkeeper branches",
+      "dependencyUpdate": "Fix: update ${dependency} to version ${version}",
+      "devDependencyUpdate": "Upgrade: update ${dependency} to version ${version}",
+      "dependencyPin" : "Update: pin ${dependency} to ${oldVersionResolved}",
+      "devDependencyPin": "Update: pin ${dependency} to ${oldVersionResolved}",
+      "closes": "\n\nCloses #${number}"
+    },
+    "prTitles": {
+      "initialPR": "Update dependencies to enable Greenkeeper!!!",
+      "initialPrBadge": "Add badge to enable Greenkeeper!!!!",
+      "initialPrBadgeOnly": "Add Greenkeeper badge!!!",
+      "initialSubgroupPR": "Update dependencies for ${group}!!!",
+      "basicPR": "Update ${dependency} to the latest!!!",
+      "groupPR": "Update ${dependency} in group ${group} to the latest!!!!"
+    }
+  },
   "publishConfig": {
     "access": "public"
   }

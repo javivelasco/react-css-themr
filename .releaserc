@@ -3,5 +3,11 @@
     "tagFormat": "${version}",
     "analyzeCommits": {
         "preset": "eslint"
+    },
+    "generateNotes": {
+      "preset": "eslint",
+      "writerOpts": {
+        "commitsSort": ["subject", "scope"],
+      }
     }
 }

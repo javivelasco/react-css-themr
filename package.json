@@ -40,7 +40,7 @@
     "cz-adapter-eslint": "^0.1.2",
     "eslint": "^5.3.0",
     "eslint-config-prettier": "^3.0.0",
-    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.10.0",
     "fbjs": "^1.0.0",
     "jest": "^23.4.2",

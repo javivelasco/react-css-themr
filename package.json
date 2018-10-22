@@ -1,20 +1,19 @@
 {
-  "name": "react-css-themr",
+  "name": "@that1matt/react-css-themr",
   "description": "React CSS Themr",
-  "homepage": "https://github.com/javivelasco/react-css-themr#readme",
-  "version": "2.1.2",
+  "homepage": "https://github.com/that1matt/react-css-themr#readme",
+  "version": "2.2.0",
   "main": "./lib",
   "author": {
-    "email": "javier.velasco86@gmail.com",
-    "name": "Javi Velasco",
-    "url": "http://javivelasco.com/"
+    "email": "matt@that1matt.com",
+    "name": "Matt"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/javivelasco/react-css-themr.git"
+    "url": "git+https://github.com/that1matt/react-css-themr.git"
   },
   "bugs": {
-    "url": "https://github.com/javivelasco/react-css-themr/issues"
+    "url": "https://github.com/that1matt/react-css-themr/issues"
   },
   "keywords": [
     "css-modules",

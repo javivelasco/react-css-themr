@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 export default PropTypes.shape({
-  theme: PropTypes.object.isRequired
-})
+  theme: PropTypes.object.isRequired,
+});

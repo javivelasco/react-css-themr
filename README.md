@@ -1,16 +1,16 @@
-[![npm version](https://img.shields.io/npm/v/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/react-css-themr)
-[![Build Status](http://img.shields.io/travis/javivelasco/react-css-themr/master.svg?style=flat-square)](https://travis-ci.org/javivelasco/react-css-themr)
-[![NPM Status](http://img.shields.io/npm/dm/react-css-themr.svg?style=flat-square)](https://www.npmjs.com/package/react-css-themr)
-
 # React CSS Themr
 
 Easy theming and composition for CSS Modules.
 
 ```
-$ npm install --save react-css-themr
+$ npm install --save @that1matt/react-css-themr
 ```
 
 **Note: Feedback and contributions on the docs are highly appreciated.**
+
+
+## Notice
+**This package was originally built by @javivelasco, but doesn't seem to be maintained anymore. This fork is to help bring the package up to date for newer version of react.**
 
 ## Why?
 
@@ -20,7 +20,7 @@ When you use [CSS Modules](https://github.com/css-modules/css-modules) to style 
 
 Taking ideas from [future-react-ui](https://github.com/nikgraf/future-react-ui) and [react-themeable](https://github.com/markdalgleish/react-themeable), a component should be shipped **without** styles. This means we can consider the styles as an **injectable dependency**. In CSS Modules you can consider the imported classnames object as a **theme** for a component. Therefore, every styled component should define a *classname API* to be used in the rendering function.
 
-The most immediate way of providing a classname object is via *props*. In case you want to import a component with a theme already injected, you have to write a higher order component that does the job. This is ok for your own components, but for ui-kits like [React Toolbox](http://www.react-toolbox.com) or [Belle](http://nikgraf.github.io/belle/), you'd have to write a wrapper for every single component you want to use. In this fancy, you can understand the theme as a **set** of related classname objects for different components. It makes sense to group them together in a single object and move it through the component tree using a context. This way, you can provide a theme either via **context**, **hoc** or **props**.
+The most immediate way of providing a classname object is via *props*. In case you want to import a component with a theme already injected, you have to write a higher order component that does the job. This is ok for your own components, but for ui-kits like [React Toolbox](http://react-toolbox.io) or [Belle](http://nikgraf.github.io/belle/), you'd have to write a wrapper for every single component you want to use. In this fancy, you can understand the theme as a **set** of related classname objects for different components. It makes sense to group them together in a single object and move it through the component tree using a context. This way, you can provide a theme either via **context**, **hoc** or **props**.
 
 The approach of react-css-themr consists of a *provider* and a *decorator*. The provider sets a context theme. The decorator adds to your components the logic to figure out which theme should be used or how should it be composed, depending on configuration, context and props.
 
@@ -124,7 +124,7 @@ The final classnames object for the `Button` component would include class value
 
 ### Context theming
 
-Although context theming is not limited to ui-kits, it's very useful to avoid declaring hoc for every component. For example, in [react-toolbox](http://www.react-toolbox.com), you can define a context theme like:
+Although context theming is not limited to ui-kits, it's very useful to avoid declaring hoc for every component. For example, in [react-toolbox](http://react-toolbox.io), you can define a context theme like:
 
 ```jsx
 import React from 'react';
@@ -168,10 +168,10 @@ The returned component accepts a `theme`, `composeTheme`, `innerRef` and `mapThe
 
 ## About
 
-The project is originally authored by [Javi Velasco](http://www.javivelasco.com) as an effort of providing a better customization experience for [React Toolbox](http://www.react-toolbox.com). Any comments, improvements or feedback is highly appreciated.
+The project is originally authored by [Javi Velasco](http://www.javivelasco.com) as an effort of providing a better customization experience for [React Toolbox](http://react-toolbox.io). Any comments, improvements or feedback is highly appreciated.
 
 Thanks to [Nik Graf](http://www.twitter.com/nikgraf) and [Mark Dalgleish](http://www.twitter.com/markdalgleish) for their thoughts about theming and customization for React components.
 
 ## License
 
-This project is licensed under the terms of the [MIT license](https://github.com/javivelasco/react-css-themr/blob/master/LICENSE).
+This project is licensed under the terms of the [MIT license](https://github.com/that1matt/react-css-themr/blob/master/LICENSE).

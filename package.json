@@ -58,7 +58,7 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "lint": "eslint src test",
-    "prepublish": "rimraf lib && npm run build",
+    "prepare": "rimraf lib && npm run build",
     "test": "mocha --compilers js:babel-core/register --recursive --reporter spec --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
   },

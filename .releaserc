@@ -4,6 +4,23 @@
     "analyzeCommits": {
         "preset": "eslint"
     },
+    "verifyConditions": [
+        {
+            "path": "@semantic-release/changelog",
+            "changelogFile": "CHANGELOG.md",
+            "changelogTitle": "Changelog FriendsOfReactJS / react-css-themr"
+        },
+        "@semantic-release/github"
+    ],
+    "prepare": [
+        "@semantic-release/changelog",
+        "@semantic-release/npm",
+        {
+            "path": "@semantic-release/git",
+            "assets": ["package.json", "CHANGELOG.md"],
+            "message": "Build: Release ${nextRelease.version} [skip ci]"
+        }
+    ],
     "generateNotes": {
       "preset": "eslint",
       "writerOpts": {

@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
+import { render } from 'react-dom'
 import expect from 'expect'
-import PropTypes from 'prop-types'
 import TestUtils from 'react-dom/test-utils'
 import { ThemeProvider } from '../../src/index'
+import { ThemeContext } from '../../src/components/themr'
 
 describe('ThemeProvider', () => {
   class Child extends Component {
     render() {
-      return <div />
+      return (
+        <ThemeContext.Consumer>
+          {data => JSON.stringify(data)}
+        </ThemeContext.Consumer>
+      )
     }
-  }
-
-  Child.contextTypes = {
-    themr: PropTypes.object.isRequired
   }
 
   it('enforces a single child', () => {
@@ -46,7 +47,7 @@ describe('ThemeProvider', () => {
   })
 
   it('should add the theme to the child context', () => {
-    const theme = {}
+    const theme = { foo: 'bar' }
 
     TestUtils.renderIntoDocument(
       <ThemeProvider theme={theme}>
@@ -55,15 +56,16 @@ describe('ThemeProvider', () => {
     )
 
     const spy = expect.spyOn(console, 'error')
-    const tree = TestUtils.renderIntoDocument(
+    const node = document.createElement('div')
+    render(
       <ThemeProvider theme={theme}>
         <Child />
-      </ThemeProvider>
+      </ThemeProvider>,
+      node
     )
     spy.destroy()
     expect(spy.calls.length).toBe(0)
 
-    const child = TestUtils.findRenderedComponentWithType(tree, Child)
-    expect(child.context.themr.theme).toBe(theme)
+    expect(JSON.parse(node.innerHTML)).toEqual({ theme })
   })
 })

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import invariant from 'invariant'
 
+export const ThemeContext = React.createContext({ theme: {} })
+
 /**
  * @typedef {Object.<string, TReactCSSThemrTheme>} TReactCSSThemrTheme
  */
@@ -50,15 +52,55 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
     localTheme
   }
 
+  function getNamespacedTheme(props) {
+    const { themeNamespace, theme } = props
+    if (!themeNamespace) return theme
+    if (themeNamespace && !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
+      'themeNamespace prop should be used only with theme prop.')
+
+    return Object.keys(theme)
+      .filter(key => key.startsWith(themeNamespace))
+      .reduce((result, key) => ({ ...result, [removeNamespace(key, themeNamespace)]:  theme[key] }), {})
+
+  }
+
+  function getContextTheme(props) {
+    return props.contextTheme
+      ? props.contextTheme.theme[config.componentName]
+      : {}
+  }
+
+  function getThemeNotComposed(props) {
+    if (props.theme) return getNamespacedTheme(props)
+    if (config.localTheme) return config.localTheme
+    return getContextTheme(props)
+  }
+
+  function getTheme(props) {
+    return props.composeTheme === COMPOSE_SOFTLY
+      ? {
+        ...getContextTheme(props),
+        ...config.localTheme,
+        ...getNamespacedTheme(props)
+      }
+      : themeable(
+        themeable(getContextTheme(props), config.localTheme),
+        getNamespacedTheme(props)
+      )
+  }
+
+  function calcTheme(props) {
+    const { composeTheme } = props
+    return composeTheme
+      ? getTheme(props)
+      : getThemeNotComposed(props)
+  }
+
   /**
    * @property {{wrappedInstance: *}} refs
    */
   class Themed extends Component {
     static displayName = `Themed${ThemedComponent.name}`;
-
-    static contextTypes = {
-      themr: PropTypes.object
-    }
 
     static propTypes = {
       ...ThemedComponent.propTypes,
@@ -75,84 +117,46 @@ export default (componentName, localTheme, options = {}) => (ThemedComponent) =>
       mapThemrProps: optionMapThemrProps
     }
 
-    constructor(...args) {
-      super(...args)
-      this.theme_ = this.calcTheme(this.props)
+    getWrappedInstance() {	
+      invariant(true,	
+        'DEPRECATED: To access the wrapped instance, you have to pass ' +	
+        '{ innerRef: fn } and retrieve with a callback ref style.'	
+      )	
+
+      return this.refs.wrappedInstance	
     }
 
-    getWrappedInstance() {
-      invariant(true,
-        'DEPRECATED: To access the wrapped instance, you have to pass ' +
-        '{ innerRef: fn } and retrieve with a callback ref style.'
-      )
-
-      return this.refs.wrappedInstance
-    }
-
-    getNamespacedTheme(props) {
-      const { themeNamespace, theme } = props
-      if (!themeNamespace) return theme
-      if (themeNamespace && !theme) throw new Error('Invalid themeNamespace use in react-css-themr. ' +
-        'themeNamespace prop should be used only with theme prop.')
-
-      return Object.keys(theme)
-        .filter(key => key.startsWith(themeNamespace))
-        .reduce((result, key) => ({ ...result, [removeNamespace(key, themeNamespace)]:  theme[key] }), {})
-    }
-
-    getThemeNotComposed(props) {
-      if (props.theme) return this.getNamespacedTheme(props)
-      if (config.localTheme) return config.localTheme
-      return this.getContextTheme()
-    }
-
-    getContextTheme() {
-      return this.context.themr
-        ? this.context.themr.theme[config.componentName]
-        : {}
-    }
-
-    getTheme(props) {
-      return props.composeTheme === COMPOSE_SOFTLY
-        ? {
-          ...this.getContextTheme(),
-          ...config.localTheme,
-          ...this.getNamespacedTheme(props)
-        }
-        : themeable(
-          themeable(this.getContextTheme(), config.localTheme),
-          this.getNamespacedTheme(props)
-        )
-    }
-
-    calcTheme(props) {
-      const { composeTheme } = props
-      return composeTheme
-        ? this.getTheme(props)
-        : this.getThemeNotComposed(props)
-    }
-
-    componentWillReceiveProps(nextProps) {
+    lastProps = {};
+    calcTheme = (props) => {
       if (
-        nextProps.composeTheme !== this.props.composeTheme ||
-        nextProps.theme !== this.props.theme ||
-        nextProps.themeNamespace !== this.props.themeNamespace
+        props.composeTheme !== this.lastProps.composeTheme ||
+        props.theme !== this.lastProps.theme ||
+        props.themeNamespace !== this.lastProps.themeNamespace ||
+        props.contextTheme !== this.lastProps.contextTheme
       ) {
-        this.theme_ = this.calcTheme(nextProps)
+        this.lastProps = props
+        this.theme_ = calcTheme(props)
       }
+      return this.theme_
     }
 
     render() {
-      return React.createElement(
-        ThemedComponent,
-        this.props.mapThemrProps(this.props, this.theme_)
+      return (
+        <ThemeContext.Consumer>
+          {contextTheme => (
+            <ThemedComponent {...this.props.mapThemrProps(this.props, this.calcTheme({ ...this.props, contextTheme }))} />
+          )}
+        </ThemeContext.Consumer>
       )
     }
   }
 
   Themed[THEMR_CONFIG] = config
 
-  return hoistNonReactStatics(Themed, ThemedComponent)
+  return hoistNonReactStatics(
+    Themed,
+    ThemedComponent
+  )
 }
 
 /**

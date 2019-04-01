@@ -1,11 +1,12 @@
 import expect from 'expect'
-import React, { Children, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TestUtils from 'react-dom/test-utils'
 import sinon from 'sinon'
 import { render } from 'react-dom'
 import shallowEqual from 'fbjs/lib/shallowEqual'
 import { themr, themeable } from '../../src/index'
+import { ThemeProvider } from '../../src/index'
 
 describe('Themr decorator function', () => {
   class Passthrough extends Component {
@@ -15,39 +16,12 @@ describe('Themr decorator function', () => {
     }
   }
 
+
   class ProviderMock extends Component {
-    static childContextTypes = {
-      themr: PropTypes.object.isRequired
-    }
-
-    getChildContext() {
-      return { themr: { theme: this.props.theme } }
-    }
-
     render() {
-      return Children.only(this.props.children)
+      return <ThemeProvider {...this.props} />
     }
   }
-
-  it('passes a context theme object using the component\'s context', () => {
-    const theme = { Container: { foo: 'foo_1234' } }
-
-    @themr('Container')
-    class Container extends Component {
-      render() {
-        return <Passthrough {...this.props} />
-      }
-    }
-
-    const tree = TestUtils.renderIntoDocument(
-      <ProviderMock theme={theme}>
-        <Container />
-      </ProviderMock>
-    )
-
-    const container = TestUtils.findRenderedComponentWithType(tree, Container)
-    expect(container.context.themr.theme).toBe(theme)
-  })
 
   it('passes a context theme object using the component\'s theme prop', () => {
     const containerTheme = { foo: 'foo_1234' }

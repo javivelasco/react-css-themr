@@ -42,7 +42,7 @@
     "eslint-plugin-react": "^7.0.0",
     "expect": "^1.18.0",
     "fbjs": "^0.8.12",
-    "jsdom": "^9.8.3",
+    "jsdom": "^16.5.0",
     "mocha": "^3.3.0",
     "prop-types": "^15.5.9",
     "react": "^15.5.4",
